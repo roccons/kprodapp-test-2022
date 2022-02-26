@@ -1,0 +1,87 @@
+//-
+
+  0405.02 - Visor de insumo
+
+.requis-Viewer
+
+  header.slidePanel-header.overlay
+
+    h4= resource.titleOriginal || resource.title
+    small= resource.nomenclatureLocation
+
+    .slidePanel-actions
+      .btn-group
+        button.btn.btn-pure.slidePanel-close(type="button" title="Cerrar")
+          i.icon.wb-close
+
+  .slidePanel-inner
+
+    table.object-info
+      tbody
+        tr
+          th Descripción del alumno
+          td!= activity.studentDescription
+        tr
+          th Descripción del coach
+          td!= activity.coachDescription
+        tr
+          th Visible para el alumno
+          td= activity.isStudentVisible ? 'Sí' : 'No'
+        tr
+          th Tarea
+          td= activity.isHomework ? 'Sí' : 'No'
+        tr
+          th Material extra (alumno)
+          td -
+        tr
+          th Material extra (coach)
+          td= activity.coachAdditionalResources
+        tr
+          th 21st Century Knotion
+          td= activity.centuryKnotion
+        tr
+          th SAMR
+          td= activity.samrEs || activity.samrEn
+        tr
+          th EdTech Quintet
+          td= activity.activityEdTechQuintetsText
+
+        tr
+          td(colspan='2')
+            ul#requis-viewer-steps.nav.nav-tabs(role="tablist")
+              each step, idx in activity.steps
+                li(class=(idx ? false : 'active'))
+                  a(data-toggle="tab" href="#requis-step-" + idx, data-idx=idx) STEP #{step.number}
+
+
+      each step, idx in activity.steps
+        tbody.tab-pane.fade(id='requis-step-' + idx, class=(idx ? 'hide' : 'in active'))
+          tr
+            th Descripción del alumno
+            td!= step.studentDescription
+          tr
+            th Descripción del coach
+            td!= step.coachDescription
+          tr
+            th Requiere entregable
+            td= step.isDeliverable ? 'Sí' : 'No'
+          tr
+            th Visible para el alumno
+            td= step.isStudentVisible ? 'Sí' : 'No'
+          tr
+            th Evaluable
+            td= step.isMeasurable ? 'Sí' : 'No'
+
+          tr
+            td(colspan="2")
+              table.inner-table: tbody
+                if step.resources && step.resources.length
+                  tr
+                    th Título del recurso
+                    th Tipo
+                  each rec in step.resources
+                    tr
+                      td= rec.titleOriginal || rec.title
+                      td= rec.resourceType
+                else
+                  th(colspan="2" style="text-align:center") (sin recursos)

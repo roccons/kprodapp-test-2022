@@ -1,0 +1,8 @@
+.alert.alert-danger.alert-dismissible.fade.in(role="alert")
+
+  button.close(type="button" data-dismiss="alert" aria-label="Cerrar")
+    span(aria-hidden="true")!='&times;'
+
+  strong= title || 'Por favor, corrige los errores antes de continuar...'
+  br
+  != message

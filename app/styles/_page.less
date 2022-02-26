@@ -1,0 +1,62 @@
+
+#site-navbar-collapse {
+  .env-extern {
+    position: absolute;
+    top: 8px;
+    right: 26px;
+    color: white;
+    background-color: @brand-danger;
+  }
+}
+
+#user-top-info {
+  padding-top: 15px;
+  padding-right: 6px;
+  line-height: 18px;
+  text-align: right;
+  color: white;
+  .-user-name:after {
+    display: table;
+    content: " ";
+  }
+  a {
+    color: white !important;
+    text-decoration: none !important;
+    cursor: pointer;
+  }
+}
+
+#user-avatar > .-user-prefs {
+  width: 52px;
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+
+  & > .avatar > .initials {
+    border-color: transparent;
+    background-clip: padding-box;
+  }
+}
+
+.site-navbar {
+  &.env {
+    &::after {
+      background: #FAFAFA;
+      border-radius: 0 0 5px 5px;
+      color: #345;
+      position: absolute;
+      padding: 0 15px;
+      top: 0;
+      left: 25%;
+    }
+    &-STG::after {
+      content: 'STG';
+    }
+    &-DEV::after {
+      content: 'DEV';
+    }
+    &-CUSTOM::after {
+      content: 'Local';
+    }
+  }
+}

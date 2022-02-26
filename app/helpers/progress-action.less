@@ -1,0 +1,19 @@
+#progress-action-dialog {
+
+  .progress {
+    margin-bottom: 0;
+  }
+
+  .progress-bar {
+    width: 0;
+  }
+
+  &.waitstate .progress-bar {
+    width: 100%;
+    transition: width 0.5s;
+  }
+
+  .modal-footer {
+    min-height: 36px;
+  }
+}

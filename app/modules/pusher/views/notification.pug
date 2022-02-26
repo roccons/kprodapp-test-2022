@@ -1,0 +1,26 @@
+-
+  var timeFormatter = App.pusher.timeFormatter
+  var urlFormatter  = App.pusher.urlFormatter
+  var itemData = item.data || {}
+  var grade    = itemData.grade ? itemData.grade.trim() : ''
+  var orderId  = itemData.model_type === 'order' && itemData.model_id ||
+                 itemData.url != null && ~itemData.url.indexOf('/orders/') && itemData.url.split('/').pop()
+
+  var info = grade ? ' - ' + grade : ''
+  if (itemData.challenge) info += ' - Reto ' + itemData.challenge
+
+a.list-group-item(
+    href=urlFormatter(itemData)
+    data-id=item.id
+    class=item.read_at ? false : 'unread'
+  )
+  .list-item
+    //- h6.media-heading A new order has been placed
+    p= itemData.title
+    .list-item-footer
+      time(datetime=JSON.stringify(item.created_at))= timeFormatter(item.created_at)
+      if info
+        span.info= info
+      span.actions(class=item.id ? false : 'hide')
+        i.action.-toggle.wb-eye(title="Marcar como leída")
+        i.action.-delete.wb-trash(title="Eliminar")

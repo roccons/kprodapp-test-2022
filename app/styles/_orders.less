@@ -1,0 +1,138 @@
+#panels-wrapper,
+#order-detail {
+
+  .circle {
+    display: inline-block;
+    margin-bottom: 3px;
+    line-height: 12px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    &::before {
+      display: inline-block;
+      content: " ";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      vertical-align: baseline;
+      background-color: currentColor;
+    }
+  }
+
+  .circle.white::before {
+    border: 1px solid @remark-border;
+  }
+}
+
+
+#included-requisitions{
+  .for-print {
+    background-color: #fff4e6 !important;  // orange
+  }
+
+  i.loader-circle {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+
+#resource-publish {
+
+  .previewzone {
+    margin: 0 !important;
+
+    .dz-preview {
+      .-flex(0, 0, 180px);
+    }
+  }
+
+  .-thumbnail-preview .dz-details {
+    height: @line-height-px;
+  }
+
+  .has-ages .easy-select {
+    display: inline-block;
+    max-width: 46px;
+  }
+
+  .krb-icon {
+    position: absolute !important;
+    top: 0;
+    right: 14px;
+    padding: 6px;
+    display: none;
+  }
+
+  .krb-check.has-warning {
+    position: relative;
+
+    input, select {
+      padding-right: 26px;
+    }
+
+    .krb-icon {
+      display: inline-block;
+      z-index: 100;
+    }
+  }
+
+  .krb-check-popup {
+    min-width: 270px;
+
+    .popover-prompt {
+      padding: 20px 20px 0;
+      font-style: italic;
+
+      & + .popover-content {
+        padding-top: 1em;
+      }
+    }
+
+    .popover-footer { display: none }
+  }
+
+}
+
+
+#detail-form.publish {
+
+  #detail-right-pane {
+    .form-control {
+      background-image: none !important;
+    }
+  }
+
+  .krb-check-popup > .popover-footer {
+    display: block;
+  }
+}
+
+
+#ordersTable {
+  .review-box {
+    svg {
+      width: 14.5px;
+      height: 20px;
+    }
+  }
+
+  .icon-priority {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url(priority.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.is_master_req {
+  border-color: @remark-titles !important;
+}
+
+input[type="radio"].master_req {
+  margin: 0 10px;
+  vertical-align: middle;
+}

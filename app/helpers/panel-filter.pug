@@ -1,0 +1,254 @@
+- var dateFormat = require('scripts/lib/dates').dateFormat
+- var _tabIdx = 50
+- var _prefix = 'sb-filters-'
+- var sfldidx = ''
+-
+  cats.responsible = App.catalogs.get('users')
+    .filter(function (u) { return u.userTypes.includes('KPROD_PRODUCTOR_ACADEMICO') })
+  cats.kprod_editors = App.catalogs.get('users')
+    .filter(function (u) { return u.userTypes.includes('KPROD_EDITOR') })
+  cats.requested_by = App.catalogs.get('users')
+    .filter(function (u) { return cats.requested_by_uuid.includes(u.id) })
+  const processTypes = { 1: 'use', 2: 'edit', 3: 'new' }
+  const is_translation = { 0: 'No', 1: 'Sí'}
+  const languages = { 'ES': 'Spanish', 'EN': 'English' }
+  const is_extra_reto = { 0: 'No', 1: 'Sí' }
+
+
+//-----------------------------------------------------------------------------
+  MARKUP
+
+#filters-sidebar-wrapper
+  h4 Filtros
+    | &nbsp; &nbsp;
+    button.btn.btn-primary.apply-filters(type="button") Aplicar
+
+  .actions
+    span.toggle-filters(title="Ocultar filtros")
+      i.icon.wb-triangle-left
+
+  .scroll-box.slim-scrollbar
+    form#filters-sidebar-form.form-material
+
+      block assigned-to-me
+
+      if 'process_type' in data
+        .form-group
+          label.control-label.expander Proceso
+          .expandible.checkbox-custom.checkbox-default
+            input(type="checkbox" id="sb-filter-pt-nosp" name="process_type" value='0'
+                  checked=data.process_type.includes(0))
+            label(for='sb-filter-pt-nosp') (No especificado)
+            br
+            each item in cats.process_type
+              - sfldidx = _prefix + _tabIdx++
+              -var processTypeClasses = ['use','edit','new']
+              input(type="checkbox" name="process_type" value=item
+                    id=sfldidx checked=data.process_type.includes(item))
+              label(for=sfldidx)
+                span(class=`label label-${processTypeClasses[item-1]}`)= processTypes[item]
+              br
+
+      if 'is_translation' in data
+        .form-group
+          label.control-label.expander Traducción
+          .expandible.checkbox-custom.checkbox-default
+            each item, key in is_translation
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="is_translation" value=key
+                    id=sfldidx checked=data.is_translation.includes(parseInt(key)))
+              label(for=sfldidx)= item
+              br
+
+      if 'cicle' in data
+        .form-group.hidden-dsbd
+          label.control-label.expander Ciclo
+          .expandible.checkbox-custom.checkbox-default
+            each item in cats.cicle
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="cicle" value=item
+                    id=sfldidx checked=data.cicle.includes(item))
+              label(for=sfldidx)= item
+              br
+
+      if 'country' in data
+        .form-group.hidden-dsbd
+          label.control-label.expander País
+          .expandible.checkbox-custom.checkbox-default
+            each item in cats.country
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="country" value=item
+                    id=sfldidx checked=data.country.includes(item))
+              label(for=sfldidx)= item
+              br
+
+      .form-group
+        label.control-label.expander Clasificación
+        .expandible.checkbox-custom.checkbox-default
+          each item in cats.classification
+            - sfldidx = _prefix + _tabIdx++
+            input(type="checkbox" name="classification" value=item
+                  id=sfldidx checked=data.classification.includes(item))
+            label(for=sfldidx)= item
+            br
+
+      .form-group
+        label.control-label.expander Grado
+        .expandible.checkbox-custom.checkbox-default
+          each item in cats.grade
+            - sfldidx = _prefix + _tabIdx++
+            input(type="checkbox" name="grade" value=item
+                  id=sfldidx checked=data.grade.includes(item))
+            label(for=sfldidx)= item
+            br
+
+      .form-group
+        label.control-label.expander Pathway
+        .expandible.checkbox-custom.checkbox-default
+          each item in cats.pathway
+            - sfldidx = _prefix + _tabIdx++
+            input(type="checkbox" name="pathway" value=item
+                  id=sfldidx checked=data.pathway.includes(item))
+            label(for=sfldidx)= item
+            br
+
+      if 'language' in data
+        .form-group
+          label.control-label.expander Idioma
+          .expandible.checkbox-custom.checkbox-default
+            each item in cats.language
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="language" value=item
+                    id=sfldidx checked=data.language.includes(item))
+              label(for=sfldidx)= languages[item] || item
+              br
+
+      if 'challenge' in data
+        .form-group
+          label.control-label.expander Reto
+          .expandible.checkbox-custom.checkbox-default
+            each item in cats.challenge
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="challenge" value=item
+                    id=sfldidx checked=data.challenge.includes(item))
+              label(for=sfldidx)= item
+              br
+
+      .form-group
+        label.control-label.expander Sesión
+        .expandible.checkbox-custom.checkbox-default
+          each item in cats.session
+            - sfldidx = _prefix + _tabIdx++
+            input(type="checkbox" name="session" value=item
+                  id=sfldidx checked=data.session.includes(item))
+            label(for=sfldidx)= item
+            br
+
+      if 'is_extra_reto' in data
+
+        .form-group
+          label.control-label.expander Extra-Reto
+          .expandible.checkbox-custom.checkbox-default
+            each item, key in is_extra_reto
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="is_extra_reto" value=key
+                    id=sfldidx checked=data.is_extra_reto.includes(parseInt(key)))
+              label(for=sfldidx)= item
+              br
+
+      .form-group
+        - var _prompt = document.section === 'boards' ? 'Cliente' : 'Solicitante'
+        label.control-label.expander #{_prompt} #[span.cleaner]
+        select.form-control.has-select(name="requested_by" data-classes="expandible" multiple)
+          each item in cats.requested_by
+            option(value=item.id selected=data.requested_by.includes(item.id))= item.name
+
+      .form-group
+        label.control-label.expander Productor responsable #[span.cleaner]
+        select.form-control.has-select(name="responsible" data-classes="expandible" multiple)
+          each item in cats.responsible
+            option(value=item.id selected=data.responsible.includes(item.id))= item.name
+
+      if 'assigned_editor' in data
+        .form-group
+          label.control-label.expander Editor asignado #[span.cleaner]
+          select.form-control.has-select(name="assigned_editor" data-classes="expandible" multiple)
+            each item in cats.kprod_editors
+              option(value=item.id selected=data.assigned_editor.includes(item.id))= item.name
+
+      if 'reviewed_by' in data
+        .form-group
+          label.control-label.expander Revisor #[span.cleaner]
+          select.form-control.has-select(name="reviewed_by" data-classes="expandible" multiple)
+            each item in cats.kprod_editors
+              option(value=item.id selected=data.reviewed_by.includes(item.id))= item.name
+
+      .form-group
+        label.control-label.expander Categoría de recursos #[span.cleaner]
+        select.form-control.has-select(name="resource_type_group" data-classes="expandible" multiple)
+          each item in App.catalogs.get('resource_type_groups')
+            option(value=item.id selected=data.resource_type_group.includes(String(item.id)))= item.name
+
+      .form-group
+        label.control-label.expander Tipo de recurso #[span.cleaner]
+        .expandible
+          .select-opts
+            a.link.s1 Seleccionar todo<br>
+            a.link.s2 Invertir selección
+          select.form-control.has-select(name="resource_type" multiple)
+
+      .form-group
+        label.control-label.expander Versión de recursos #[span.cleaner]
+        .expandible
+          .select-opts
+            a.link.s1 Seleccionar todo<br>
+            a.link.s2 Invertir selección
+          select.form-control.has-select(name="resource_version" multiple)
+
+      block extra-fields
+
+      if statuses
+        .form-group
+          if document.section === 'orders'
+            label.control-label.expander Estatus de la orden
+          else
+            label.control-label.expander Estatus
+
+          .expandible.checkbox-custom.checkbox-default
+            each item in statuses
+              - sfldidx = _prefix + _tabIdx++
+              input(type="checkbox" name="status" value=item.id
+                    id=sfldidx checked=data.status.includes(item.id))
+              label(for=sfldidx)= item.name
+              br
+
+      .form-group
+        label.control-label.expander Producción
+
+        .expandible.checkbox-custom.checkbox-default
+          each item in productions
+            - sfldidx = _prefix + _tabIdx++
+            input(type="checkbox" name="production_id" value=item.id
+                  id=sfldidx checked=data.production_id.includes(item.id))
+            label(for=sfldidx)= item.name
+            br
+
+      block extra-status
+
+      .form-group
+        label.control-label.expander Atributos adicionales
+        .expandible.checkbox-custom.checkbox-default
+          - sfldidx = _prefix + _tabIdx++
+          input(type="checkbox" name="attrs_additional" value="is_mathematics"
+                id=sfldidx checked=data.attrs_additional.includes('is_mathematics'))
+          label(for=sfldidx) Matemáticas
+          br
+          - sfldidx = _prefix + _tabIdx++
+          input(type="checkbox" name="attrs_additional" value="is_coach"
+                id=sfldidx checked=data.attrs_additional.includes('is_coach'))
+          label(for=sfldidx) Coach version
+
+      button.btn.btn-default.clean-filters(type="button") Limpiar
+
+#filter-unhide.toggle-filters(title="Mostrar filtros")
+  i.icon.wb-triangle-right

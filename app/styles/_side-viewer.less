@@ -1,0 +1,168 @@
+// custom styles viewer
+#slideViewer {
+  width: 500px;
+  max-width: 500px;
+
+  .slidePanel-header {
+    width: 100%;
+    max-width: 100%;
+    height: 70px;
+    padding: 1px 70px 0 18px;
+
+    &.compact {
+      height: 50px;
+      max-height: 50px;
+
+      h4 { margin-top: 14px; }
+    }
+  }
+
+  .slidePanel-inner {
+    position: relative;
+    padding: 1px 20px 0 18px;
+
+    .slidePanel-title > i {
+      vertical-align: middle;
+    }
+
+    .edit {
+      position: absolute;
+      top: 0px;
+      right: 20px;
+      padding: 8px;
+
+      .wb-close{
+        display:none;
+      }
+
+      &.active{
+        .wb-close{
+          display:inline-block;
+        }
+
+        .wb-pencil{
+          display:none;
+        }
+      }
+    }
+  }
+
+  .slidePanel-actions {
+    position: absolute;
+    float: none;
+    top: 2px;
+    right: 6px;
+    min-height: auto;
+
+    .btn-pure {
+      color: white; //@remark-fore-color;
+      &.active, &:focus, &:hover {
+        //color: @remark-border;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .slidePanel-preview {
+    min-height: 202px;
+    background: @gray-light;
+  }
+
+  .slidePanel-error {
+    padding: 20px;
+
+    .slidePanel-close {
+      opacity: .5;
+      &:hover,
+      &:focus {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  h4 {
+    margin-top: 16px;
+  }
+
+  header {
+    background-color: @brand-primary;
+    color: white;
+    h4 {
+      color: white;
+      margin-top: 12px;
+      margin-bottom: 2px;
+    }
+    text-align: left;
+  }
+
+  &.slidePanel-dark-header {
+    header {
+      background-color: @knotion-color-menu-hover;
+    }
+  }
+
+  &-title {
+    padding-right: 40px;
+  }
+
+  table.object-info {
+    margin: 15px 0;
+    min-width: 100%;
+
+    th,
+    td {
+      padding: 5px 0;
+      vertical-align: top;
+    }
+    th {
+      width: 45%;
+      padding-right: 12px;
+      text-align: right;
+    }
+
+    .info-image {
+      img {
+        max-width: 120px;
+      }
+      .icon {
+        font-size: 32px !important;
+      }
+    }
+  }
+
+  table.inner-table {
+    margin-left: 10px;
+    margin-top: 14px;
+    width: 95%;
+
+    th {
+      text-align: center;
+      width: auto;
+      text-align: left;
+      border-bottom: 1px solid @material-border;
+    }
+  }
+
+  // fix problems
+  .scrollable-bar {
+    z-index: 1001;
+    &.is-hovering {
+      z-index: 1100;
+    }
+  }
+
+  .thumbnail {
+    max-height: 90px;
+  }
+
+  .apps-desc {
+    max-height: ((@line-height-base * 6) + 0em) !important;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
+
+#requis-viewer-steps {
+  margin-top: 14px;
+  margin-bottom: 14px;
+}

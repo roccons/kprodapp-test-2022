@@ -1,0 +1,47 @@
+doctype html
+- const dates = require('scripts/lib/dates')
+html(lang='es')
+
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0')
+
+    title Registro de Errores - Knotion Resource Bank
+
+    style.
+      body {
+      color: #666; background-color: #fff;
+      font: normal normal 14px/1 Arial,Helvetica,sans-serif;
+      margin: 0; padding: 6px 10px 10px; }
+      table th, table td {
+      padding: 4px 6px;
+      border-right: 1px solid white; }
+      table thead tr th {
+      text-align: left;
+      border-bottom: 1px solid #ccc; }
+      table tbody tr td {
+      border-bottom: 1px solid #eee; }
+      table tbody tr:nth-child(odd) {
+      background-color: #fcfcfc; }
+      table {
+      border-collapse: collapse;
+      width: 100%; }
+
+  body
+    h3 Ultimos errores generados
+
+    table
+      thead
+        tr
+          th Fecha
+          th Usuario
+          th Sección
+          th Mensaje
+      tbody
+        each item in logs
+          tr
+            td= dates.dateTimeFormat(item.time)
+            td= item.user
+            td= item.section
+            td!= item.message

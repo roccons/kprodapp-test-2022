@@ -1,0 +1,208 @@
+@brand-primary : #579adc;
+@input-color   : #76838f;
+@input-border  : @input-color;
+@list-radius   : 3px;
+@hover-color   : #f6f6f6;
+
+.easy-select {
+  position: relative;
+  display: block;
+  width: 100%;
+  outline: none;
+
+  .es-input {
+    padding-right: 23px;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .caret {
+    position: absolute;
+    //display: none;
+    display: block;
+    right: 5px;
+    bottom: 12px;
+    cursor: pointer;
+  }
+
+  //&.open .caret,
+  //.es-input.focus + .caret,
+  //.es-input:hover + .caret,
+  //.caret:active, .caret:hover {
+  //  display: block;
+  //}
+
+  .es-input:disabled,
+  &.disabled .es-input,
+  &.disabled .caret {
+    cursor: not-allowed;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  & > .es-wrapper > .options  li.opt label {
+        -ms-user-select: none;
+       -moz-user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
+  }
+
+  & > .es-wrapper {
+    position: absolute;
+    display: none;
+    box-sizing: border-box;
+    top: 36px;
+    left: 0;
+    width: 100%;
+    box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.11);
+    border: 1px solid #ddd;
+    border-top: 0 none;
+    border-bottom-left-radius: @list-radius;
+    border-bottom-right-radius: @list-radius;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  &.open > .es-wrapper {
+    display: block;
+    z-index: 1001;
+    &.up {
+      top: auto;
+      bottom: 100%;
+      margin-bottom: 5px;
+    }
+  }
+
+  & > .es-wrapper > .options {
+    position: relative;
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+
+    &:focus {
+      outline: none;
+    }
+
+    li {
+      position: relative;
+      display: block;
+      line-height: 17px;
+      min-height: 27px;
+      padding: 5px 5px 5px 5px;
+      margin: 0;
+    }
+
+    &, li, li label, li i, li span {
+      cursor: default;
+    }
+
+    li label {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+    }
+    li span {
+      display: none;
+    }
+
+    // styling for optgroups
+    li.group {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      & > label {
+        font-style: italic;
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      &.disabled > label {
+        opacity: 0.5;
+      }
+
+      ul {
+        padding-left: 0;
+        li {
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+
+  & > .es-wrapper.multiple > .options {
+    li.opt {
+      padding-left: 25px;
+
+      i {
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 5px;
+        color: @brand-primary;
+      }
+    }
+
+    li.opt.selected i {
+      display: inline-block;
+    }
+  }
+
+  & > .es-wrapper > .options li.opt:hover {
+    background-color: @hover-color;
+  }
+
+  & > .es-wrapper > .options.es-keys li.opt.active {
+    color: white;
+    background-color: @brand-primary;
+    i {
+      color: white;
+    }
+  }
+
+  // disabled state
+  &.disabled {
+    opacity: 0.7;
+  }
+
+  // disabled state
+  & > .es-wrapper > .options li.opt.disabled {
+    background-color: inherit;
+    pointer-events: none;
+    * {
+      opacity: 0.5;
+    }
+  }
+
+  // this is applied on that hidden select.
+  .es-hidden {
+    display: none;
+    z-index: -1;
+  }
+
+  .es-mobile {
+    z-index: 1;
+  }
+}
+
+.easy-select.align-right {
+  .opt,
+  .group,
+  .es-input {
+    text-align: right !important;
+  }
+}
+
+.form-inline .easy-select {
+  display: inline-block;
+  min-width: 3em;
+  width: auto;
+
+  .es-input {
+    width: 100%;
+  }
+}

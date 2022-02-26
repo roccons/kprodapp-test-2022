@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="48px" viewBox="0 0 42 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <defs>
+        <polygon id="path-1" points="0.00547774666 0.0153103299 0.00547774666 34.125434 9.3514265 34.125434 18.6973752 34.125434 18.6973752 0.0153103299 0.00547774666 0.0153103299"></polygon>
+    </defs>
+    <g id="new_ActivityStep" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ACTIVITY---Step" transform="translate(-856.000000, -998.000000)">
+            <g id="cube-copy" transform="translate(856.000000, 998.000000)">
+                <g id="Group-3" transform="translate(0.000000, 13.096788)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <polyline id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)" points="18.6973752 9.45957031 0 0.0153103299 0 24.6809896 18.6973752 34.125434 18.6973752 9.45957031"></polyline>
+                </g>
+                <polyline id="Fill-4" fill="#FFFFFF" points="20.9410603 18.6212348 39.3734952 9.31070964 20.9410603 0 2.50862538 9.31070964 20.9410603 18.6212348"></polyline>
+                <polyline id="Fill-5" fill="#FFFFFF" points="23.1847453 22.5563585 23.1847453 47.2222222 41.8821206 37.7777778 41.8821206 13.1120985 23.1847453 22.5563585"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

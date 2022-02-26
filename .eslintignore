@@ -1,0 +1,10 @@
+**/public/**/*.*
+**/vendor/**/*.*
+**/coverage/**
+**/spec/expect/**
+**/spec/fixtures/**
+**/jquery*.js
+**/app/assets/**
+**/toastr.js
+**/scrollIntoView.js
+**.md

@@ -1,0 +1,30 @@
+#user-login.modal.fade(role='dialog')
+  .modal-dialog.modal-center.modal-sm
+    .modal-content
+      .modal-header
+        img(src='images/logo-black.png')
+        .subtitle.logo knowledge in action
+
+      .modal-body
+        form#user-login-form(action='#')
+          input(type='hidden', name='username', value=App.user.userName)
+
+          .form-group
+            big= App.user.userName
+
+          .form-group.margin-bottom-10
+            .input-group
+              input#user-login-password.form-control.last(type='password'
+                name='password' maxlength='40' placeholder='Contraseña' tabindex='1')
+
+              span.input-group-btn
+                button.btn.btn-primary.btn-login(type='submit' disabled tabindex='2')
+                  i.icon.wb-unlock(aria-hidden='true')
+                  span.sr-only desbloquear
+
+          .status-text.text-danger
+            .loader
+            span
+
+          p.user-prompt
+            a.user-logout(href='/') Iniciar como un usuario diferente

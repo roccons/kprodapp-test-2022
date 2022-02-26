@@ -1,0 +1,55 @@
+//-
+  Solo los primeros 4 estatus de requisiciones deben quedar visibles en el select
+  de requisición (los siguientes estatus los actualizará automáticamente la api en
+  ciertos momentos específicos).
+
+  Si se edita una requisición en cualquiera de los estatus de producción (PK PO PP)
+  debe mostrarse el estatus en modo no edición (como cuando creas una nueva
+  requisición y no puedes cambiar el estatus de RR).
+
+  Con estatus CC ya no es editable la requisición.
+
+//- id es null si se está creando una nueva requisición
+-
+  var catalogs = App.catalogs
+  var statname = status && catalogs.nameFromId('req_statuses', status) || '(nulo)'
+  var canEdit  = id && catalogs.reqStatusEditable(status) && !needs_review
+  var statuses = catalogs.get('req_statuses')
+
+  if (canEdit && user_capabilities.edit) {
+    statuses = statuses.filter(function (c) { return c.editable })
+  } else if (canEdit && _partialStatus) {
+    statuses = statuses.filter(function (c) { return c.editable && /^(EE|RR)$/.test(c.id) })
+  } else {
+    statuses = null
+  }
+
+
+
+.dropdown.dropdown-status
+
+  if statuses
+    - var _tabidx  = (typeof _state == 'object' ? ~~_state.tabidx : 0) + 20
+    button#status-button.btn.dropdown-toggle(
+        type="button"
+        data-id=(status || '')
+        data-toggle="dropdown"
+        name="requis_status"
+        tabindex=_tabidx++
+        class=('rq-' + status)
+      )
+      span.caption= statname
+      span.caret(style="display:inline-block")
+
+    ul#status-popup.dropdown-menu(tabindex=_tabidx++)
+      each item in statuses
+        li: a.link(href="javascript:void(0)" data-id=item.id)= item.name
+
+  else
+    button.btn(
+        type="button"
+        data-id=(status || '')
+        disabled
+        class=('rq-' + status)
+      )
+      span.caption= statname

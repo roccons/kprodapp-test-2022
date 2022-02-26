@@ -1,0 +1,26 @@
+-
+  catEditors = App.catalogs.get('users')
+    .filter(function (u) { return u.userTypes.includes('KPROD_EDITOR') })
+
+#progress-action-dialog.modal.fade(tabindex="-1" role="dialog")
+  .modal-dialog.modal-center.modal-sm
+    .modal-content
+      .modal-header.compact-header
+        button.close.wb-close(type="button" data-dismiss="modal" tabindex="200" title="Cerrar")
+        h3.modal-title Asignar editor
+
+      .modal-body.form-material
+
+        .form-group
+          label.control-label(for="panel-editor-select") Selecciona el editor
+          select#panel-editor-select.form-control(tabindex="201")
+            option(value="" selected)
+            each item in catEditors
+              option(value=item.id)= item.name
+
+      .modal-footer
+        button.btn.btn-primary.submit-form(
+          type="button"
+          tabindex="202"
+          disabled
+          ) Aceptar

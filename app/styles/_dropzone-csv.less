@@ -1,0 +1,80 @@
+@-outer-height: 200px;
+@-outer-width:  320px;
+@-outer-margin:  10px;
+@-inner-height: (@-outer-height - 7px);
+@-inner-width:  240px;
+@-border-color: @remark-border;
+@-focus-color:  @brand-primary;
+@-hover-color:  @material-hover;
+@-error-color:  @brand-danger;
+
+@-height-preview: 120px;
+@-h-padding-preview: 32px;
+@-v-padding-preview: 10px;
+
+#orders-generate-form {
+  position: relative;
+  width: (@-outer-width + 2px);
+  height: (@-outer-height + 2px);
+  padding: 0;
+  text-align: center;
+  border: 1px dashed rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    background-color: @-hover-color;
+  }
+  &.dz-drag-hover {
+    border-style: solid;
+    background-color: @-hover-color;
+  }
+  &.dz-drag-hover .dz-message {
+    opacity: 0.5;
+  }
+
+  &.dz-clickable {
+    cursor: pointer;
+  }
+
+  .dz-message {
+    pointer-events: none;
+
+    .upload-instructions {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+  }
+
+  .dz-icon {
+    margin-top: 15%;
+    opacity: 0.5;
+    font-size: 32px;
+  }
+
+  .dz-preview {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 6px;
+    cursor: default;
+    display: none;
+  }
+
+  .dz-details {
+    margin-top: 22%;
+  }
+
+  &.dz-started {
+    .dz-preview { display: block }
+    .dz-message { display: none }
+  }
+}
+
+#orders-generate-result {
+  .-out-header > table {
+    margin-left: 6px;
+  }
+}
+
+#generate-again {
+  margin: 14px auto 14px 6px;
+}

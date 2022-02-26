@@ -1,0 +1,363 @@
+-
+  var dateTimeFormat = require('scripts/lib/dates').dateTimeFormat
+  var _tabidx = ~~(_state && _state.tabidx) + 30
+  var languages = App.catalogs.get('form_field_options').requisitions['language']
+  var _editExtra = _fullEdit && !resource_translated_id
+  _fullEdit = !!_fullEdit
+  var referenceTitle = reference_resource_title && reference_resource_title.length > 26
+                    ? reference_resource_title.substr(0, 26) + '...' : reference_resource_title
+  var krbTitle = krb_resource_title && krb_resource_title.length > 26
+              ? krb_resource_title.substr(0, 26) + '...' : krb_resource_title
+
+  console.log(fromCreateRequisition)
+
+  function getIdx() { return _fullEdit ? ++_tabidx : '-1' }
+
+  function productorFilter(u) {
+    return u.userTypes.indexOf('KPROD_PRODUCTOR_ACADEMICO') >= 0
+  }
+
+  function editorFilter(u) {
+    return u.userTypes.indexOf('KPROD_EDITOR') >= 0
+  }
+
+mixin ageList(defAge)
+  - var n = 2
+  while ++n <= 15
+    option(value=n selected=(n === defAge))= n
+
+- if (_editExtra)
+    -
+      grades = App.catalogs.get('grades')
+      cicles = App.catalogs.get('cicle')
+      pathways = _catalogs.pathway
+      challenges = _catalogs.challenge
+
+
+//- HTML ------------------------------------------------------
+
+h4 Referencias
+
+//- Muestra el dropdown button de Estatus
+// include _status-slide.pug
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label ID autoría
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static
+      if resource_id
+        |  #[a.link(href=authoring_url target="_blank" title="Ver en autoría")= resource_id]
+      else
+        |  -
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Clave prod.
+  .col-xs-12.col-sm-12.col-md-9.col-lg-9.space-between
+    p.nowrap.form-control-static= production_key || '-'
+    a#link_krb_resource_id(href="#")
+      - if (production_key)
+        span.wb-copy
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Clave loc.
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static.nowrap #[span#location_key_str= location_key || '-']
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label ID asociación
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static= resource_translated_id || '-'
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label ID original
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static
+      if resource_original_id
+        |  #[span= resource_original_id]
+      else
+        |  -
+
+.row
+  .col-sm-12.col-lg-3.padding-r-0
+    p
+      label.control-label Rec. repetidos
+  .col-sm-12.col-lg-9
+    p.form-control-static
+      if repeated_resources && repeated_resources.length
+        | #{repeated_resources.join(', ')}
+      else
+        | -
+
+.row
+  .col-sm-12.col-md-12.col-lg-3.padding-r-0
+    p
+      label.control-label Ordenes relacionadas
+  .col-sm-12.col-md-12.col-lg-9.space-between
+    p.form-controlstatic#requisition-related-orders -
+
+.row
+  .col-sm-12.col-md-12.col-lg-3.padding-r-0
+    p
+      label.control-label Orden producción
+  .col-sm-12.col-md-12.col-lg-9
+    p.form-control-static
+      if order_id
+        | #[a(href=board_url target="_blank" title="Ver tarjeta de la orden de producción")= order_id]
+      else
+        | -
+
+hr
+.row.rb-relations#rb-relations
+  .col-md-12
+    h4 Relación con Resource Bank
+  .col-md-6.rb-relation-item
+    strong.rb-relations-title Recurso de referencia
+    .rb-relation
+      if reference_resource_id
+        - var link = krb_resource_type === 'AST' ? 'asset' : 'recurso'
+        - link = App.config.KRB_URL_BASE + '/' + link + '/' + reference_resource_id
+        strong  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= reference_resource_id]
+        p#reference-resource-title= resourceTitle
+        span#reference-resource-type= resourceTitle
+      else
+        .center-flex.disabled NO HAY RECURSO DE REFERENCIA
+
+  .col-md-6.rb-relation-item
+    strong.rb-relations-title ID de Resource Bank
+    .rb-relation.-action-assign(class=classSetKRB data-action-require="resource-associate")
+      if krb_resource_id
+        strong.space-between
+          - var link = krb_resource_type === 'AST' ? 'asset' : 'recurso'
+          - link = App.config.KRB_URL_BASE + '/' + link + '/' + krb_resource_id
+          |  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= krb_resource_id]
+
+        p.nowrap#krb-resource-title= krbTitle
+        span#krb-resource-type= krb_resource_type
+      else
+        .center-flex.disabled NO EXISTE ID DE RESOURCE BANK
+
+
+hr
+
+h4 Otra información
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Ciclo
+      if _editExtra
+        | *
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      select.form-control#f_cicle(name='cicle' required tabindex=_tabidx++)
+        option(value="" selected=!cicle)
+        each _cicle in cicles
+          option(value=_cicle.period selected=_cicle.period===cicle)= _cicle.period
+    else
+      p.form-control-static= cicle
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Grado
+      if _editExtra
+        | *
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      select.form-control#f_grade(name='grade' required tabindex=_tabidx++)
+        option(value="" selected=!grade)
+        each _grade in grades
+          option(value=_grade.name selected=_grade.name===grade)= _grade.name
+    else
+      p.form-control-static= grade
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Pathway
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      select.form-control#f_pathway(name='pathway' tabindex=_tabidx++)
+        option(value="" selected=!pathway)
+        each _pathway in pathways
+          option(value=_pathway selected=_pathway===pathway)= _pathway
+    else
+      p.form-control-static= pathway
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Idioma
+      if _editExtra
+        | *
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      select.form-control#f_language(name='language' tabindex=_tabidx++)
+          option(value="" selected=!language)
+          each _language in languages
+            option(value=_language.value selected=_language.value===language)= _language.name
+    else
+      p.form-control-static= languages.find( function (lang) { return lang.value === language}).name
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Reto
+      if _editExtra
+        | *
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      select.form-control#f_challenge(name='challenge' required tabindex=_tabidx++)
+        option(value="" selected=!challenge)
+        each _challenge in challenges
+          option(value=_challenge selected=_challenge===challenge)= _challenge
+    else
+      p.form-control-static= challenge
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Sesión
+      if _editExtra
+        | *
+  .col-sm-12.col-md-9.col-lg-9
+    if _editExtra
+      input.form-control#f_challenge(type='number' min=1 name='session' value=session required tabindex=_tabidx++)
+    else
+      p.form-control-static= session || '-'
+
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Step
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static= step || '-'
+
+hr
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Fecha de solicitud
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static= dateTimeFormat(created_at || new Date(), ', ')
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Solicitado por
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static= requested_by_str
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label Aprobado por
+  .col-sm-12.col-md-9.col-lg-9
+    p.form-control-static.approved-by=status === 'RR' ? '--' : approved_by_str
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label(for="#f_responsible") Productor
+        if _fullEdit
+          |  *
+  .col-sm-12.col-md-9.col-lg-9
+    if _fullEdit && user_capabilities.edit
+      - var users = App.catalogs.get('users').filter(productorFilter)
+      select#f_responsible.form-control(name="responsible" required tabindex=_tabidx++)
+        option(value="" selected=!responsible)
+        each user in users
+          option(value=user.id selected=user.id===responsible)= user.name
+    else
+      p.form-control-static=responsible_str || '-'
+
+if params.id && params.action !== 'crear'
+  .row
+    .col-sm-12.col-md-3.col-lg-3.padding-r-0
+      p
+        label.control-label(for="#f_responsible") Editor
+    .col-sm-12.col-md-9.col-lg-9
+
+      - var _showp = ~_partials.indexOf('a')
+      if _fullEdit && user_capabilities.edit || _showp
+        - var users = App.catalogs.get('users').filter(editorFilter)
+        select#f_assigned_editor.form-control(readonly=_disabled tabindex=_tabidx++ name="assigned_editor")
+          option(value="" selected=!assigned_editor)
+          each user in users
+            option(value=user.id selected=user.id===assigned_editor)= user.name
+        if _showp
+          p.form-control-static=assigned_editor_str || '-'
+      else
+        p.form-control-static=assigned_editor_str || '-'
+
+.row
+  .col-sm-12.col-md-3.col-lg-3.padding-r-0
+    p
+      label.control-label(for="#f_reviewed_by") Revisor
+  .col-sm-12.col-md-9.col-lg-9
+
+    - var _showp = ~_partials.indexOf('a')
+    if _fullEdit && user_capabilities.edit || _showp
+      - var users = App.catalogs.get('users').filter(editorFilter)
+      select#f_reviewed_by.form-control(readonly=_disabled tabindex=_tabidx++ name="reviewed_by")
+        option(value="" selected=!reviewed_by)
+        each user in users
+          option(value=user.id selected=user.id===reviewed_by)= user.name
+      if _showp
+        p.form-control-static=reviewed_by_str || '-'
+    else
+      p.form-control-static=reviewed_by_str || '-'
+
+hr
+div.ages
+  a#btn-show-more(href="#") Ver mas
+  .hidden
+
+    .form-group.compact.margin-top-25
+      .checkbox-custom.checkbox-default
+        input#f_visible_for_student(type="checkbox" value="1"
+          name="visible_for_student" checked=!!visible_for_student disabled=!_fullEdit tabindex=getIdx())
+        label(for="f_visible_for_student") Visible para el alumno
+      .checkbox-custom.checkbox-default
+        input#f_is_mathematics(type="checkbox" value="1"
+          name="is_mathematics" checked=!!is_mathematics disabled=!_fullEdit tabindex=getIdx())
+        label(for="f_is_mathematics") Matemáticas
+      .checkbox-custom.checkbox-default
+        input#f_is_coach(type="checkbox" value="1"
+          name="is_coach" checked=!!is_coach disabled=!_fullEdit tabindex=getIdx())
+        label(for="f_is_coach") Coach version
+      .checkbox-custom.checkbox-default
+        input#f_is_translation(type="checkbox" value="1"
+          name="is_translation" checked=!!is_translation disabled=!_fullEdit || (status!='AA' && !fromCreateRequisition) tabindex=getIdx())
+        label(for="f_is_translation") Traducción
+
+    //.clearfix.ages-box.form-horizontal
+
+    .row
+      .col-sm-12.col-md-3.col-lg-3.padding-r-0
+        p
+          label.control-label(for="f_minimum_age") Edad mínima
+      .col-sm-12.col-md-9.col-lg-9
+        if _fullEdit
+          select#f_minimum_age.form-control(name="minimum_age" size="9" tabindex=_tabidx++)
+            +ageList(minimum_age || 3)
+        else
+          p.form-control-static= minimum_age
+
+    .row
+      .col-sm-12.col-md-3.col-lg-3.padding-r-0
+        p
+          label.control-label(for="f_maximum_age") Edad máxima
+      .col-sm-12.col-md-9.col-lg-9
+        if _fullEdit
+          select#f_maximum_age.form-control(name="maximum_age" size="9" tabindex=_tabidx++)
+            +ageList(maximum_age || 15)
+        else
+          p.form-control-static= maximum_age
+
+        // include _extra-info.pug

@@ -1,0 +1,103 @@
+table, table tr, table td, table th {
+  border-color: @material-border;
+}
+
+table.no-border {
+  tr, th, td {
+    border: 0 none !important;
+  }
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: @zebra-color;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: @material-hover;
+}
+
+table.fix-tabbable-editable {
+  table-layout: fixed;
+
+  td {
+    vertical-align: middle !important;
+
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+
+    &:first-child {
+      p, input {
+        padding-left: 6px;
+      }
+    }
+  }
+
+  tbody {
+    td {
+      padding: 4px 6px 4px 1px;
+    }
+
+    & > tr:not(.edition) {
+      cursor: pointer;
+    }
+    tr.focus:not(:focus) {
+      outline: dotted 1px @remark-border;
+      outline-color: -webkit-focus-ring-color;
+      outline-color: -moz-focus-ring-color;
+      outline-color: -ms-focus-ring-color;
+    }
+  }
+
+  tfoot {
+    td {
+      padding: 8px 8px 4px 0;
+    }
+  }
+
+  td.col-tools,
+  th.col-tools {
+    width: 50px;
+    padding-right: 0;
+    padding-left: 0;
+    text-align: left;
+  }
+
+  .col-tools {
+    opacity: 0;
+  }
+
+  tr.edition {
+    background-color: transparent !important;
+    .col-tools {
+      opacity: 1;
+    }
+  }
+
+  &:not(.lock-edit) {
+    tr:hover,
+    tr:focus,
+    tr.focus {
+      .col-tools {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.lock-edit {
+    tr:not(.edition) {
+      .btn-icon {
+        display: none !important;
+      }
+    }
+  }
+
+  &.waitstate {
+    .btn-icon {
+      display: none !important;
+    }
+  }
+}

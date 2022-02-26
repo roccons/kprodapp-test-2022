@@ -1,0 +1,8 @@
+// para forzar a utilizar un entorno del back crear un archivo app.conf,
+// dejando activo solo uno de los siguientes entornos
+
+entorno=LOCAL
+api_base=http://localhost:8000/kprod
+
+entorno=DEV
+api_base=https://dev-workflow-api.knotion.com/kprod

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Text XhtmlHttpRequest</title>
+  </head>
+
+  <body>
+    <h1>Test 2</h1>
+    <button id="test-btn" type="button">Test</button>
+
+    <script>
+      function Test() {
+        const API_BASE = 'http://dev-knotionworkflow.us-west-2.elasticbeanstalk.com/kprod'
+        //AlbertoA
+        const authKey = '70408282-6329-47ee-8ece-825c17d7a3de:YjM2ZTU1Y2EtZDE0Zi00MGNiLWI5ZjUtOWYxNDY3ZDQwZmYw'
+        const req = new XMLHttpRequest()
+
+        req.open('PATCH', API_BASE + '/orders/8', true)
+        req.setRequestHeader('Authorization', authKey)
+        req.setRequestHeader('Content-Type', 'application/json; charset=UTF-8')
+        req.send('{"card_status":1,"card_substatus":0}')
+      }
+
+      document.getElementById('test-btn').addEventListener('click', Test)
+
+    </script>
+  </body>
+</html>

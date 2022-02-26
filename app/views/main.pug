@@ -1,0 +1,125 @@
+svg(
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="display:none;"
+  )
+  g#icon-dshbd
+    path#icon-dshbd(stroke="#99a4ae" stroke-width="5" fill="none"
+      d="m84.263 56.413v41.001h-24.179c-0.04096-7.0296 0.08192-14.067-0.06134-21.092-0.91083-3.3194-4.8724-2.1148-7.4484-2.3391-2.7147-0.60275-5.2424 1.5285-4.5787 4.3111v19.12h-24.176v-41.001h-18.134c16.118-17.572 32.236-35.143 48.354-52.715 16.118 17.572 32.236 35.143 48.354 52.715h-18.131z")
+
+nav#site-navbar.site-navbar.navbar.navbar-default.navbar-fixed-top.navbar-mega.navbar-inverse
+
+  //- Logo and brand
+
+  .navbar-header
+    button.navbar-toggle.hamburger.hamburger-close.navbar-toggle-left.hided(
+        type='button'
+        data-toggle='menubar'
+      )
+      span.sr-only Alternar navegación
+      span.hamburger-bar
+
+    button.navbar-toggle.collapsed(
+        type='button'
+        data-target='#site-navbar-collapse'
+        data-toggle='collapse'
+      )
+      i.icon.wb-more-horizontal(aria-hidden='true')
+
+    .navbar-brand.navbar-brand-center
+      img.navbar-brand-logo(src='images/logo.png' alt='Knotion' title='Knotion')
+      span.navbar-brand-text
+        img(src='images/logo-knotion.png' alt='Knotion' title='Knotion' style='margin-left:0')
+
+  //- Top Navbar
+
+  .navbar-container.container-fluid
+    #site-navbar-collapse.collapse.navbar-collapse.navbar-collapse-toolbar
+
+      //- Navbar Toolbar
+
+      ul.nav.navbar-toolbar
+        li#toggleMenubar.hidden-float
+          a(data-toggle='menubar' role='button')
+            i.icon.hamburger.hamburger-arrow-left.hided.unfolded
+              span.sr-only Alternar barra de menú
+              span.hamburger-bar
+
+        li#toggleFullscreen.hidden-xs
+          a.icon.icon-fullscreen(data-toggle='fullscreen' role='button')
+            span.sr-only Alternar pantalla completa
+      //- End Navbar Toolbar
+
+      //- User profile and notifications
+
+      ul.nav.navbar-toolbar.navbar-right.navbar-toolbar-right
+        li
+          #user-top-info
+            strong.-user-name= App.user.fullName
+            a.-user-logout(role="button")
+              small Cerrar Sesión
+
+        li#user-avatar
+          a.navbar-avatar.-user-prefs(role="button")
+            - var avatar = require('scripts/user-avatar')(App.user.id)
+            != avatar.replace(/<\/span>$/, '<i><\/i>$&')
+
+        li#user-notifications.dropdown
+          a(data-toggle="dropdown" href="javascript:void(0)"
+            title="Notificationes" aria-expanded="false" data-animation="scale-up" role="button")
+            i.icon.fa-bell(aria-hidden="true")
+            span#notifications-count.badge.badge-danger.up
+          #notifications-list
+      //- End user profile and notifications
+
+      h1 Dashboard
+  //- End Top Navbar
+
+#site-menubar.site-menubar
+
+  //- Site Menu Body
+
+  .site-menubar-body
+    div
+      div
+        ul#main-menu.site-menu
+          each opt in menu
+            li.site-menu-item(data-section=opt.section data-view-require=opt.require || false)
+              a(href=opt.url title=(opt.toolTip || false))
+                if opt.icon === 'home'
+                  svg.site-menu-icon.icon-dashbd(viewBox="0 0 108 100")
+                    use(xlink:href="#icon-dshbd")
+                else
+                  i.site-menu-icon(class=opt.icon aria-hidden="true")
+                span.site-menu-title!= opt.title
+
+  //- Menu Footer
+
+  .site-menubar-footer
+    a(data-placement='top' data-toggle='tooltip' title='Preferencias' data-action='prefs')
+      span.icon.wb-settings(aria-hidden='true')
+
+    a(data-placement='top' data-toggle='tooltip' title='Bloquear' data-action='lock')
+      span.icon.wb-eye-close(aria-hidden='true')
+
+    a.fold-show(data-placement='top' data-toggle='tooltip'
+        title='Cerrar sesión', data-action='logout')
+      span.icon.wb-power(aria-hidden='true')
+  //- End Site Menu
+
+//- Main Page Content
+
+#main-wrapper.page
+  #main-page
+
+//- Page Footer
+- var dates = require('scripts/lib/dates')
+- var build = ' (build: ' + dates.dateTimeFormat(App.config.buildtime) + ')'
+
+footer#site-footer.site-footer
+  .site-footer-legal
+    span(title=build) #{App.name} #{build}
+    |  © Copyright - #[a(href='http://knotion.com/', target='_blank') Knotion]. All rights reserved.
+  .site-footer-right Crafted with #[i.wb.wb-heart(style='color:#f96868')] by
+    |  #[a(href='http://habitatweb.mx/', target='_blank') HabitatWeb], México.

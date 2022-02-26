@@ -1,0 +1,32 @@
+- var dates = require('scripts/lib/dates')
+- var perms = App.user.getPerms().map(function (p) { return p.name + (p.value ? ': Sí' : ': No') })
+.page-content
+  .panel
+    .panel-body
+      h3 Sistema de Producción f
+      table.table.table-condensed.no-border(style='width:auto')
+        tr
+          th.text-right Usuario en sesión:
+          td
+            strong= App.user.fullName
+            = ' (' + App.user.userName + ')'
+        tr
+          th.text-right Función:
+          td= App.user.getRoles().join(', ') || '--'
+        tr
+          th.text-right Permisos:
+          td= perms.join(', ')
+        tr
+          th.text-right Inicio de sesión:
+          td= dates.longDateTime(App.user.startTime)
+
+        if App.config._ISDEVEL
+          tr
+            th.text-right Servidor de la API:
+            td= App.config.API_BASE + ' (' + App.config._ENVIRON + ')'
+
+        tr
+          th
+          td(style="padding-top:18px")
+
+            button.btn.btn-default.-show-logs(type='button', disabled=!logs.length) Mostrar log

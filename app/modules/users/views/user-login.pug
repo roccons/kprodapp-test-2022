@@ -1,0 +1,25 @@
+#user-login.modal.fade(role="dialog")
+  .modal-dialog.modal-center.modal-medium
+    .modal-content
+      .modal-header
+        img.login-logo(src='images/logo-black.png')
+        .subtitle.logo knowledge in action
+
+      .modal-body
+        form#user-login-form(action='#')
+
+          .form-group
+            label.sr-only(for='user-login-username') Nombre de usuario
+            input#user-login-username.form-control.input-lg(type='text'
+              name='username' maxlength='120' tabindex='1' placeholder='Nombre de usuario')
+
+          .form-group.margin-bottom-10
+            label.sr-only(for='user-login-password') Contraseña
+            input#user-login-password.form-control.input-lg(type='password'
+              name='password' maxlength='40' tabindex='2' placeholder='Contraseña')
+
+          .status-text.text-danger
+            .loader
+            span
+
+          button.btn.btn-lg.btn-primary.btn-login(type='submit' tabindex='3' disabled) Iniciar Sesión

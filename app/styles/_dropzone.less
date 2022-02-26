@@ -1,0 +1,272 @@
+@import "app/styles/_helpers.less";
+@import "app/styles/_knotion-colors.less";
+@import "app/styles/icons/_wb-variables.less";
+
+@-dz-font-size:         (@font-size-base - 2px);
+@-dz-hover-color:       @material-hover;
+
+@-dz-image-height:      112px;
+@-dz-box-padding:       5px;
+@-dz-info-height:       38px;
+@-dz-icon-size:         38px;
+@-dz-progress-height:   8px;
+
+@-dz-inner-height:      (@-dz-image-height + @-dz-info-height);
+@-dz-outer-height:      (@-dz-inner-height + @-dz-box-padding * 2);
+@-dz-outer-width:       @-dz-outer-height;
+
+/*
+  Para establecer la altura de la imagen:
+    .previewzone -> .dz-image -> height
+*/
+
+.dz-dropbox,
+.dz-preview {
+  position: relative;
+  display: inline-block;
+  padding: @-dz-box-padding;
+  overflow: hidden;
+  transition: all 0.2s ease-in;
+}
+
+
+/*
+  Zona de previews
+*/
+
+.previewzone {
+  position: relative;
+  margin: 10px -5px;
+  width: 100%;
+  width: calc(100% ~"+" 12px);
+
+  .-flexbox();
+  .-flex-wrap();
+  .-flex-align();
+
+  .dz-preview {
+    //.-flex(0, 0, 25%);
+    .-flex(0, 0, 33.0%);
+  }
+
+}
+
+/*
+  Contenedor genérico para previews
+*/
+
+.dz-preview {
+  font-size: @-dz-font-size;
+
+  // Los archivos de medios (img, video, audio, etc) van dentro de .dz-image
+  .dz-image {
+    position: relative;
+    width: 100%;
+    height: @-dz-image-height;
+    border: 1px solid @material-border;
+    border-radius: 3px;
+    //background: @material-hover url(chess.png);
+
+    .-flexbox();
+    .-flex-align(center);
+    .-flex-justify(center);
+
+    & > * {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    img {
+      object-fit: scale-down;
+    }
+    audio {
+      width: 96%;
+      margin: 0 auto;
+    }
+    video {
+      background: #222;
+    }  
+    .icon {
+      font-size: 5em !important;
+    }
+  }
+
+  // información de archivo dentro de .dz-details, debajo de .dz-image
+  // contenedor interno, decarta el padding externo, incluye info de archivo.
+  .dz-details {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: @-dz-info-height;
+    padding-top: 2px;
+    line-height: (@-dz-info-height / 2 - 1px);
+    text-align: center;
+
+    & > *:first-child {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+  }
+
+  // Icono para cancelar o remover, directamente dentro de .dz-preview
+  .dz-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 7px 9px;
+    border: none;
+    background-color: @brand-danger;
+    border-radius: 3px;
+    font-size: 1.75em;
+    line-height: 1;
+    display: none;
+    z-index: 3;
+
+    &::before {
+      color: white !important;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  &:not(.readonly):hover .dz-remove {
+    display: block;
+    cursor: pointer;
+  }
+
+} // .dz-preview
+
+
+@-dz2-image-height: 162px;
+
+.dropzone {
+  font-size: @-dz-font-size;
+
+  .dz-message {
+    position: relative;
+    width: 100%;
+    height: (@-dz2-image-height + @-dz-info-height);
+    text-align: center;
+    border: 2px dashed @material-border;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+
+    .-flexbox(column);
+    .-flex-justify(center);
+
+    .dz-icon {
+      font-size: 2em;
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: .36em;
+    }
+
+    .dz-instructions {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  .dz-image {
+    height: @-dz2-image-height;
+  }
+
+  .dz-progress {
+    position: absolute;
+    top: (@-dz2-image-height - @-dz-progress-height + 5px);
+    left: 5px;
+    width: calc(100% ~"-" 10px);
+    height: @-dz-progress-height;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    overflow: hidden;
+    display: none;
+    z-index: 2;
+
+    .dz-upload {
+      width: 0;
+      border-top: 1px solid white;
+      background-color: @brand-success !important;
+    }
+  }
+
+  // debe estar dentro de .dz-image
+  .dz-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -(@-dz-icon-size);
+    margin-left: -(@-dz-icon-size / 2);
+    pointer-events: none;
+    z-index: 2;
+
+    & > *::before {
+      display: inline-block;
+      border-radius: 1000px;
+      width: @-dz-icon-size;
+      font-size: @-dz-icon-size;
+      line-height: 1;
+      text-align: center;
+      background-color: white;
+      box-shadow: 0 0 0 2px white;
+    }
+  }
+
+  //- Despliegue dinámico debido al estado y acciones -------------------------
+
+  &.dz-drag-hover:not(.readonly) .dz-message,
+  &:not(.readonly) .dz-message:hover {
+    background-color: @-dz-hover-color;
+    border-style: solid;
+
+    .dz-icon {
+      opacity: 0.9;
+    }
+  }
+
+  &.readonly .dz-message {
+    cursor: default !important;
+  }
+
+  .dz-preview.dz-error .dz-error-mark {
+    display: inline-block;
+    color: @brand-danger;
+  }
+
+  .dz-preview.dz-success .dz-success-mark {
+    display: inline-block;
+    color: @brand-success;
+  }
+
+  .dz-preview.dz-processing:not(.dz-complete):not(.dz-error) .dz-progress {
+    display: block;
+  }
+
+  &.dz-max-files-reached .dz-dropbox {
+    display: none;
+  }
+
+}
+
+
+#upload-delivery-dropzone {
+
+  .-flexbox();
+  .-flex-wrap();
+  .-flex-align();
+
+  .dz-dropbox {
+    .-flex(1, 0, 25%);
+  }
+
+  .dz-preview {
+    .-flex(0, 0, 25%);
+  }
+  .dz-image {
+    height: @-dz2-image-height;
+  }
+
+}

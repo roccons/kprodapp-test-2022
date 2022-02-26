@@ -1,0 +1,479 @@
+@import "icons/_fa-variables.less";
+@import "icons/_mixins.less";
+
+@-task-active-color:  @gray-lighter;
+@-task-color-green: #7ed321;
+@-task-color-red:   #e93030;     // task-tester-RJ es #d0011b en icono de Knotion
+@-task-color-blue:  #579adc;
+@-task-color-gray:  #cbcbcb;
+
+@-color-st-DD: #7ed321;
+@-color-st-RJ: #e93030;     // task-tester-RJ es #d0011b en icono de Knotion
+@-color-st-RR: #579adc;
+@-color-st-TD: darken(#cbcbcb, 10%);
+
+
+#detail-tasks {
+
+  .new-task-box {
+    display: inline-block;
+    padding-top: 10px;
+    border-top: 1px solid @material-border;
+  }
+
+  .-new-task:hover {
+    & > span:first-child {
+      opacity: .7;
+    }
+  }
+
+  &.readonly {
+    .taskbox-handle,
+    .taskbox-edit,
+    .new-task-box {
+      display: none;
+    }
+  }
+}
+
+
+/*
+  Contadores de tareas en la parte superior de la pestaña
+*/
+#order-task-count {
+  text-align: center;
+
+  & > .task-count-box {
+    padding: 14px 18px 10px;
+    display: inline-block;
+    font-size: (@font-size-base - 2px);
+    font-weight: bolder;
+    white-space: nowrap;
+
+    &.totals { color: @-task-color-blue }
+    &.completed { color: @brand-success }
+
+    & > .number {
+      font-size: (@font-size-base + 8px);
+    }
+  }
+}
+
+/**
+ * List of tasks (This is a TABLE)
+ */
+table.order-tasklist {
+  table-layout: fixed;
+
+  & > tbody > tr > td {
+    height: 56px;
+    padding: 0;
+  }
+
+  & > thead > tr > th {
+    padding: 8px 0;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  & > tbody > tr > td,
+  & > thead > tr > th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  th.taskbox-final      { width: 4px; }
+  th.taskbox-handle     { width: 36px; }
+  th.taskbox-status     { width: 50px; }
+  th.taskbox-edit       { width: 36px; }
+  th.taskbox-title      { width: auto; }
+  th.taskbox-comments   { width: 48px; }
+  th.taskbox-todos      { width: 76px; }
+  th.taskbox-users      { width: 108px; }
+  th.taskbox-tester     { width: 68px; }
+  th.taskbox-active     { width: 64px; }
+
+  td.taskbox-final {
+    position: relative;
+    & > span {
+      display: inline-block;
+      padding: 2px 1px 2px 3px;
+      margin-left: -2px;
+      font-size: 1.5em;
+      color: @brand-primary;
+      z-index: 10;
+    }
+  }
+
+  // sortable
+  td.taskbox-handle {
+    padding-left: 6px;
+    cursor: move;
+    & > .task-reorder {
+      display: none;
+      font-size: 16px;
+      line-height: 1;
+      color: @remark-border;
+    }
+  }
+  tr:hover {
+    td.taskbox-handle > .task-reorder {
+      display: inline-block
+    }
+  }
+  .sortable-ghost {
+    opacity: .3;
+    outline: @text-color solid 2px;
+  }
+
+  td.taskbox-status {
+    padding-right: 6px;
+  }
+
+  // edición por el task-manage dentro de la celda del título
+  th.taskbox-edit,
+  td.taskbox-edit {
+    padding-right: 6px;
+  }
+  .task-edit-icon {
+    display: inline-block;
+    width: 30px;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+    opacity: .7;
+    transition: opacity .2s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  th.taskbox-title,
+  td.taskbox-title {
+    padding-right: 42px;
+    text-align: left;
+  }
+
+  svg {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    vertical-align: middle;
+  }
+
+  td.taskbox-comments {
+    text-align: left;
+    cursor: pointer;
+    svg {
+      height: 18px;
+      width: 18px;
+      margin-right: 6px;
+    }
+    .comment-count {
+      display: inline-block;
+      text-align: left;
+      white-space: nowrap;
+      overflow: visible;
+    }
+  }
+
+  th.taskbox-todos,
+  td.taskbox-todos {
+    padding-right: 6px;
+  }
+  td.taskbox-todos {
+    cursor: pointer;
+  }
+
+  td.taskbox-tester {
+    & > * {
+      display: inline-block;
+    }
+  }
+
+  tr.inactive {
+    td.taskbox-status,
+    td.taskbox-title,
+    td.taskbox-comments,
+    td.taskbox-todos,
+    td.taskbox-users,
+    td.taskbox-tester {
+      opacity: .6;
+    }
+  }
+
+  td.disabled {
+    opacity: 0.6;
+    cursor: default;
+
+    & > * {
+      opacity: 0.6 !important;
+      cursor: default;
+    }
+  }
+
+  .avatar + .avatar {
+    margin-left: 8px;
+  }
+}
+
+
+#slideViewer.slidePanel-gray {
+  background-color: @-task-active-color;
+  .slidePanel-inner {
+    padding-bottom: 10px;
+  }
+}
+
+
+#slideViewer .task-tester-Viewer,
+#slideViewer .task-review-Viewer,
+#slideViewer .task-todos-Viewer {
+
+  .comment-editor {
+    padding-top: 14px;
+    padding-bottom: 8px;
+  }
+
+  .underlined-tabs {
+    margin-left: -4px;
+    border-bottom: 0 none;
+
+    li {
+      & > a {
+        padding: 10px 10px 4px;
+        border-color: transparent;
+        border-bottom: 2px solid transparent;
+      }
+      &.active > a {
+        border-bottom-color: @brand-primary;
+      }
+    }
+
+    & + .tab-content {
+      margin-top: 20px;
+      padding-left: 6px;
+    }
+  }
+
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+
+#slideViewer .task-tester-Viewer,
+#slideViewer .task-todos-Viewer {
+
+  .task-sidebar-banner {
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+
+  .task-review-table {
+    table-layout: fixed;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    td, th {
+      padding: 5px 0;
+      vertical-align: middle;
+    }
+    th:first-child {
+      width: 45%;
+    }
+  }
+
+  .expander {
+    padding-bottom: 7px;
+    border-bottom: 1px solid @material-border;
+  }
+
+  .task-tester-todobox {
+    .row {
+      margin-top: 8px;
+      margin-bottom: 12px;
+    }
+    .row > .form-group {
+      margin-top: 2px;
+      margin-bottom: 2px;
+      & > label {
+        text-align: left;
+        font-weight: 300;
+      }
+    }
+  }
+
+  .tester-todo-score {
+    position: absolute;
+    right: 28px;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .criteria-box {
+    input[type="number"],
+    .as-input-number {
+      display: inline-block;
+      width: 58px;
+      text-align: right;
+      margin-right: 5px;
+    }
+    .checkbox-custom {
+      margin-left: 32px;
+    }
+  }
+
+  .task-tester-summary {
+    font-weight: 400;
+  }
+
+  .task-tester-icon {
+    margin-left: 8px;
+    height: 24px;
+  }
+}
+
+
+#slideViewer .task-review-Viewer {
+  height: 100%;
+
+  .slidePanel-inner {
+    padding-left: 10px;
+    padding-right: 12px;
+  }
+
+  .task-delivery-titlebar {
+    h5 {
+      margin-right: 80px;
+      text-align: left;
+    }
+  }
+
+  .task-delivery-status {
+    font-size: (@font-size-base - 2px);
+    & > * {
+      vertical-align: middle;
+    }
+  }
+
+  .task-review-icon {
+    height: 14px;
+    margin-left: 6px;
+    margin-right: 2px;
+  }
+
+  .task-delivery-version {
+    background-color: white;
+    padding: 10px 14px;
+  }
+
+  .comment-header {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .as-final-box {
+    position: absolute;
+    top: 13px;
+    right: 0;
+  }
+
+  .task-delivery-files {
+    width: 100%;
+    .-flexbox();
+    .-flex-wrap();
+    .-flex-align();
+    .-flex-justify();
+
+    .task-delivery-file-wrapper {
+      width: 50%;
+      height: 192px;
+      padding: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .task-delivery-link {
+      width: 100%;
+      font-size: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+  }
+}
+
+
+/*
+  Iconos de status de la tarea (taskInstances)
+*/
+
+.task-icon-status::before {
+  height: 26px;
+  width: 26px;
+  display: inline-block;
+  font: normal normal normal 20px/26px FontAwesome;
+  text-rendering: auto;
+  text-align: center;
+  border-radius: 50%;
+  color: white;
+}
+
+// TD
+.task-status-TD {
+  &::before {
+    content: @fa-var-ellipsis-h;
+    background-color: @-color-st-TD;
+  }
+}
+// Ready to Review
+.task-status-RR {
+  &::before {
+    content: @fa-var-ellipsis-h;
+    background-color: @-color-st-RR;
+  }
+}
+// Done
+.task-status-DD {
+  &::before {
+    content: @fa-var-check;
+    background-color: @-color-st-DD;
+  }
+}
+// Rejected
+.task-status-RJ {
+  &::before {
+    content: @fa-var-times;
+    background-color: @-color-st-RJ;
+  }
+}
+
+.task-color-TD { color: @-color-st-TD }
+.task-color-RR { color: @-color-st-RR }
+.task-color-DD { color: @-color-st-DD }
+.task-color-RJ { color: @-color-st-RJ }
+
+/*
+  Colores para el icono del status de Revisión
+*/
+.task-tester-TD { stroke: @-color-st-TD; fill: @-color-st-TD }  // Sin completar
+.task-tester-DD { stroke: @-color-st-DD; fill: @-color-st-DD }  // Validada
+.task-tester-RJ { stroke: @-color-st-RJ; fill: @-color-st-RJ }  // Incorrecta
+.task-tester-RR { stroke: @-color-st-RR; fill: @-color-st-RR }  // Completada, espera validación
+
+
+/*
+  Comentarios de taskInstances
+*/
+.comments-popup {
+  .comment-list {
+    margin-bottom: 8px;
+  }
+  .comment-editor {
+    margin-top: 18px;
+  }
+}

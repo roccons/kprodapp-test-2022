@@ -1,0 +1,42 @@
+-
+  const _S1 = {
+    p1: 'Para usar la verificación de 2 pasos necesitas instalar una aplicación de contraseñas de un solo uso (TOTP) la cual generará automáticamente un código de autenticación que cambia después de cierto tiempo.',
+    p2: '1. Descarga la aplicación "Autenticación de Google" para Android, iOS o Windows Phone',
+    p3: '2. Escanea el siguiente código QR con tu dispositivo:',
+    p4: `Si no puedes escanear el código QR, puedes ingresar el siguiente código: <strong>${secret}</strong>`,
+    p5: '3. Después de configurar la aplicación TOTP, ingresa los dos códigos de autenticación consecutivos:',
+  }
+  const full = typeof qrUrl === 'string' && !!qrUrl
+
+#user-login.modal.fade(role='dialog' class=!full && 'no-qr')
+  .modal-dialog.modal-center.modal-medium
+    .modal-content
+      .modal-header
+        img(src='images/logo-black.png')
+        .subtitle= full ? 'Configuración de la verificación de 2 pasos' : 'Verificación de 2 pasos'
+
+      .modal-body
+        form#user-login-form(action='#')
+          input(type='hidden', name='username', value=App.user.userName)
+
+          if full
+            .text-wrapper
+              p= _S1.p1
+              p= _S1.p2
+              p= _S1.p3
+              img(src=qrUrl)
+              p!= _S1.p4
+              p= _S1.p5
+
+          .form-group.margin-bottom-10
+            input#user-login-code.form-control.input-lg(type='text'
+              name='logincode' maxlength='6' placeholder='Código' tabindex='1')
+
+          .status-text.text-danger
+            .loader
+            span
+
+          button.btn.btn-lg.btn-primary.btn-login(type='submit' tabindex='2' disabled) Siguiente
+
+          p.user-prompt.margin-top-15
+            a.user-logout(href='/') Iniciar como un usuario diferente

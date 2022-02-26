@@ -1,0 +1,22 @@
+{
+  "name": "post-index-brunch",
+  "description": "Post-process of final index.html file.",
+  "version": "0.0.6",
+  "main": "index.js",
+  "author": "aMarCruz <amarcruz@yahoo.com>",
+  "engines": {
+    "node": ">=10.13"
+  },
+  "scripts": {
+    "build": "npm pack",
+    "postbuild": "rm -f ../post-index-brunch*.tgz && mv post-index-brunch-*.tgz ../"
+  },
+  "dependencies": {
+    "crc-32": "~1.2.0"
+  },
+  "peerDependencies": {
+    "brunch": ">=2.10.17"
+  },
+  "license": "MIT",
+  "private": true
+}

@@ -1,0 +1,27 @@
+#qt-batch-editor.modal.fade(role="dialog")
+  .modal-dialog.modal-center
+    .modal-content
+      header.modal-header.compact-header
+        h3.modal-title QuickTags
+
+      form#qt-batch-form.form-material
+        .modal-body
+          section.row
+            .col-sm-12
+              .form-group
+                label.control-label(for="qt-batch-add") Etiquetas para agregar
+                input#qt-batch-add.form-control.has-tokens(name="addtags" tabindex="1")
+
+          div &nbsp;
+
+          section.row
+            .col-sm-12
+              .form-group
+                label.control-label(for="qt-batch-cur") Etiquetas a mantener
+                input#qt-batch-cur.form-control.has-tokens(name="curtags" tabindex="2")
+
+        .modal-footer
+          button.btn.btn-default.cancel-form(
+            type="button" data-dismiss="modal" tabindex="3") Cancelar
+          button.btn.btn-primary.submit-form(
+            type="submit" disabled tabindex="4") Guardar

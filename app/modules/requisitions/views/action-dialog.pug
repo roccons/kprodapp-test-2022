@@ -1,0 +1,10 @@
+.modal.fade(id=prefix + '-dialog', tabindex="-1" role="dialog")
+  .modal-dialog.modal-center.modal-lg
+    .modal-content
+      .modal-header.compact-header
+        button.close.wb-close(type="button" data-dismiss="modal" tabindex="200" title="Cerrar")
+        h3.modal-title= title
+
+      .modal-body.form-material
+
+        table(id=prefix + 'Table')

@@ -1,0 +1,317 @@
+
+@-cmnt-font-size: 14px;
+@-cmnt-font-small: (@-cmnt-font-size - 2px);
+
+.textcomplete-dropdown {
+  margin-left: 4px;
+}
+
+.textcomplete-item {
+  cursor: pointer;
+}
+
+.mention {
+  font-weight: normal;
+  color: @remark-titles;
+  border-bottom: 1px solid @gray-light;
+}
+
+img.emojione,
+.emojione {
+  display: inline-block !important;
+  vertical-align: middle;
+  height: 1.28572em;
+  top: -1px;
+}
+
+.dropdown-menu li .emojibox {
+  display: inline-block;
+  font-size: inherit;
+  line-height: (@line-height-px - 2px);
+  width: @line-height-px;
+  text-align: center;
+  margin: 0 .3em 0 0;
+}
+
+/*
+  Popup de comentarios
+*/
+
+.comments-popup {
+  width: 360px;
+  max-width: 360px;
+  padding: @line-height-px 16px 16px;
+  font-size: @-cmnt-font-size;
+
+  transition: height 0.2s;
+
+  &:focus {
+    outline: none;
+  }
+
+  .popover-content {
+    margin-bottom: 20px;
+    max-height: calc(100vh ~"-" 260px);
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  img, video, audio {
+    display: block;
+    max-width: 95%;
+    max-height: 180px;
+  }
+
+  // Estos estilos son un poco más cercanos a GMF
+  h4 {
+    margin-left: 0;
+  }
+  h1, h2, h3, h4, h5 {
+    margin-top: 14px;
+  }
+  table {
+    width: auto !important;
+  }
+}
+
+/*
+  Lista de comentarios
+*/
+
+.comment-list {
+
+  & > .single-comment {
+    position: relative;
+
+    &:hover .comment-delete {
+      display: inline-block;
+    }
+  }
+
+  // encabezado de comentario
+  .comment-header {
+    padding: 4px 0;
+    line-height: 1.5;
+    border-bottom: 1px solid @material-border;
+    padding-left: 38px;
+
+    .avatar {
+      float: left;
+      margin-top: 2px;
+      margin-left: -38px;
+    }
+    .comment-user {
+      font-weight: bolder;
+    }
+    .comment-date {
+      font-size: @-cmnt-font-small;
+    }
+  }
+
+  .comment-body {
+    padding-top: 6px;
+    padding-bottom: 10px;
+  }
+
+  .icon-action {
+    cursor: pointer;
+  }
+
+  .comment-delete {
+    position: absolute;
+    display: none;
+    top: 12px;
+    right: 4px;
+    width: 24px;
+    line-height: 22px;
+    font-size: 16px;
+    text-align: center;
+    color: @input-border;
+    opacity: 0.6;
+    z-index: 3;
+
+    &:hover {
+      color: @brand-danger;
+      opacity: 1;
+    }
+  }
+
+  .comment-file {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    .-flexbox();
+    .-flex-align(flex-start);
+
+    button {
+      padding: 4px 8px 4px 6px;
+      font-size: 2em;
+      line-height: 1;
+      opacity: .7;
+      .-flex(0, 0, 24px);
+      &:hover { opacity: 1; }
+    }
+
+    .dz-details {
+      padding-right: 8px;
+      overflow: hidden;
+      font-size: (@font-size-base - 2px);
+    }
+    .dz-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+
+#itsk-comment-list {
+  .previewzone {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+
+    .dz-preview {
+      height: 160px;
+      max-height: 160px;
+      .-flex(0, 0, 50%);
+    }
+  }
+}
+
+
+.comment-editor {
+  position: relative;
+
+  // TABs en del editor
+  a[data-toggle="tab"] {
+    font-size: 12px;
+    line-height: 14px;
+    padding: 10px 14px 8px;
+  }
+
+  .tab-content {
+    padding-top: 6px;
+    padding-bottom: 8px;
+  }
+
+  .tab-pane {
+    position: relative;
+
+    & > * {
+      // 3 líneas y agrega 14px por margenes 2x6 + 2px del borde
+      height: (@line-height-px * 3 + 14px);
+      max-height: (@line-height-px * 3 + 14px);
+      line-height: @line-height-px;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      border: 1px dashed transparent;
+    }
+  }
+
+  &.dz-drag-hover .tab-pane > * {
+    background: @material-hover;
+    background-image: none;
+    border: 1px dashed @material-border !important;
+  }
+
+  // botones de Dropzone
+  .dz-details {
+    position: relative;
+    height: 33px;
+    bottom: -1px;
+
+    & > button {
+      position: relative;
+      height: 33px;
+      bottom: 0;
+      padding-top: 5px;
+      padding-bottom: 4px;
+    }
+  }
+
+  .attached-file {
+    padding-left: 34px;
+
+    [data-dz-remove] {
+      display: block;
+      float: left;
+      margin-left: -30px;
+      margin-top: -3px;
+      color: @brand-danger;
+    }
+
+    [data-dz-size] > strong {
+      font-weight: 300;
+    }
+
+    &.dz-error {
+      span:first-child { text-decoration: line-through; }
+    }
+  }
+
+  // texto bajo los TABs del editor
+  .comment-prefs {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    float: left;
+    input[type="checkbox"] + label {
+      font-weight: 300;
+    }
+  }
+
+  .markdown-link {
+    float: left;
+    clear: left;
+    font-size: 12px;
+  }
+
+  .-preview-box {
+    max-height: 100%;
+    padding-bottom: 0;
+    overflow-y: auto;
+    border-bottom: 1px solid @material-border;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 45%;
+    left: 48%;
+    display: none;
+  }
+
+  &.sending {
+    .tab-pane > * {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .spinner {
+      display: inline-block;
+      opacity: 1;
+      z-index: 1;
+      -webkit-animation: fa-spin 1s infinite linear;
+              animation: fa-spin 1s infinite linear;
+    }
+  }
+
+  &.dz-max-files-reached {
+    .-attach {
+      display: none;
+    }
+  }
+}
+
+.label {
+  &-new {
+    background: @indicator-new;
+  }
+  &-edit {
+    background: @indicator-edit;
+  }
+  &-use {
+    background: @indicator-use;
+  }
+}

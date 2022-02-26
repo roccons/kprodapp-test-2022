@@ -1,0 +1,22 @@
+
+h4 Historial de actividad
+
+if versionList && versionList.length
+  each version in versionList
+
+    blockquote
+      .history-header
+        != require('scripts/user-avatar')(version.user_id)
+        b= version.user_name
+        span.history-date= version.date
+
+      each entry in version.entries
+        .history-entry
+          != entry.action
+          if entry.oldVal != null
+            .history-oldval= String(entry.oldVal)
+          if entry.newVal != null
+            .history-newval= String(entry.newVal)
+
+else
+  p Sin cambios.

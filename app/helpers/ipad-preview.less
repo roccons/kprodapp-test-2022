@@ -1,0 +1,214 @@
+@import "app/styles/_helpers.less";
+
+/*
+  http://techytot.com/ipad-mini-dimensions-in-inches/
+  Portrait
+    alto: 1271.1
+    ancho: 852.8
+    margen Y: 123.5
+    margen X: 42.5
+    radio home: 63.5
+    radio camra: 15.2
+    radio mic: 50% de la camra
+    offset camra en margen Y: 51%
+    offset home en margen X: 50%
+
+  Se inicia landscape:
+*/
+@ip-z-index-base:         2000;
+
+@ip-display-size-x:       1024px;
+@ip-display-size-y:       768px;
+@ip-outer-margin-x:       120px;
+@ip-outer-margin-y:       40px;
+@ip-total-outer-x:        (@ip-display-size-x + (@ip-outer-margin-x * 2));  // 1268 = 1024 + 244
+@ip-total-outer-y:        (@ip-display-size-y + (@ip-outer-margin-y * 2));  //  852 =  768 + 84
+@ip-outer-padding:        4px;
+@ip-inner-margin-x:       (@ip-outer-margin-x - @ip-outer-padding);
+@ip-inner-margin-y:       (@ip-outer-margin-y - @ip-outer-padding);
+
+@ip-camera-diameter:      16px;
+@ip-home-diameter:        64px;
+@ip-home-in-diameter:     26px;
+@ip-outer-radius:         11px;
+
+@ip-light-skin-color:     #f4f4f6;
+@ip-dark-skin-color:      #434448;
+@ip-dark-bg-color:        #23262d;
+
+
+#ipad-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.6);
+  z-index: (@ip-z-index-base + 1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  animation: ipadShow .3s forwards;
+}
+
+
+#ipad-preview {
+  position: relative;
+  width: @ip-total-outer-x;
+  height: @ip-total-outer-y;
+  padding: @ip-outer-padding;
+  background-color: @ip-light-skin-color;
+  box-shadow: 0 6px 20px @ip-dark-bg-color;
+  border-radius: @ip-outer-radius;
+  border: 1px solid black;
+  outline: none !important;
+
+  & > .ipad-outer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: @ip-outer-radius;
+    border: 1px solid fade(black, 15%);
+    box-shadow: 0 0 20px fade(black, 10%) inset;
+
+    .-flexbox();
+    .-flex-align(center);
+  }
+
+  .ipad-camera, .ipad-home {
+    position: absolute;
+    top: 50%;
+    border-radius: 50%;
+    border: 1px solid fade(@ip-dark-skin-color, 50%);
+  }
+
+  .ipad-camera {
+    width: @ip-camera-diameter;
+    height: @ip-camera-diameter;
+    left: ((@ip-inner-margin-x - @ip-camera-diameter) / 2);
+    margin-top: -(@ip-camera-diameter / 2);
+    box-shadow: 0px -6px 6px fade(black, 5%) inset;
+  }
+
+  .ipad-home {
+    width: @ip-home-diameter;
+    height: @ip-home-diameter;
+    right: ((@ip-inner-margin-x - @ip-home-diameter) / 2);// - 2px;
+    margin-top: -(@ip-home-diameter / 2);
+    background: linear-gradient(fade(black, 10%), fade(black, 5%), fade(white, 10%), fade(white, 30%));
+    cursor: pointer;
+
+    & > .ipad-home-in {
+      position: relative;
+      top: 50%;
+      margin-top: -(@ip-home-in-diameter / 2);
+      margin-left: auto;
+      margin-right: auto;
+      width: @ip-home-in-diameter;
+      height: @ip-home-in-diameter;
+      border-radius: 5px;
+      border: 1px solid fade(@ip-dark-skin-color, 40%);
+      box-shadow: 0px -6px 6px fade(black, 5%) inset;
+      pointer-events: none;
+    }
+  }
+
+  &.-dark-skin {
+    background: @ip-dark-skin-color;
+    background: linear-gradient(to bottom left, #434448, #050608, black);
+    border-color: fade(white, 18%);
+
+    & > .ipad-outer {
+      border-top-color: fade(white, 8%);
+      border-right-color: fade(white, 8%);
+      border-bottom-color: fade(white, 16%);
+      border-left-color: fade(white, 16%);
+      box-shadow: 0 0 20px fade(white, 12%) inset;
+    }
+
+    .ipad-camera {
+      box-shadow: 0px 4px 8px fade(white, 16%) inset;
+    }
+
+    .ipad-home > .ipad-home-in {
+      box-shadow: none;
+      box-shadow: 0px -6px 6px fade(black, 16%) inset;
+    }
+  }
+}
+
+
+#ipad-content {
+  position: relative;
+  width: @ip-display-size-x;
+  height: @ip-display-size-y;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: @ip-dark-bg-color;
+
+  z-index: (@ip-z-index-base + 3);
+
+  @ip-bg-color1: lighten(black, 12%);
+  @ip-bg-color2: lighten(black, 6%);
+  background: linear-gradient(@ip-bg-color1, @ip-bg-color2, black);
+
+  border: 3px inset #999;
+  box-sizing: content-box;
+
+  .-flexbox();
+  .-flex-align(center);
+  .-flex-justify(center);
+
+  & > * {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  audio {
+    width: 96%;
+    margin: 0 auto;
+  }
+
+  video {
+    background: #222;
+  }
+}
+
+
+#ipad-controls {
+  position: fixed;
+  top: 22px;
+  right: 28px;
+  width: 42px;
+  height: auto;
+
+  z-index: (@ip-z-index-base + 4);
+
+  & > div {
+    display: inline-block;
+    width: 42px;
+    line-height: 42px;
+    font-size: 24px;
+    margin-top: 6px;
+    text-align: center;
+    border-radius: 50%;
+    color: fade(white, 50%);
+    background: fade(black, 25%);
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+      background: fade(black, 40%);
+    }
+  }
+}
+
+@-webkit-keyframes ipadShow {
+  0% { opacity: 0 } 100% { opacity: 1 }
+}
+@keyframes ipadShow {
+  0% { opacity: 0 } 100% { opacity: 1 }
+}

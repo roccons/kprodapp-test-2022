@@ -1,0 +1,356 @@
+@import "app/styles/_knotion-colors.less";
+@import "app/styles/_helpers.less";
+
+#primitives-wrapper {
+  .no-items {
+    font-style: italic;
+    cursor: default !important;
+  }
+}
+
+
+#primitives-management {
+
+  .primitives-list {
+    padding-left: 30px;
+  }
+
+  .criteria-list {
+    padding-right: 6px;
+  }
+}
+
+
+#sort-primitives {
+  color: @remark-fore-color;
+  opacity: .7;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.sorted {
+    color: @brand-primary;
+    opacity: 1;
+
+    &:hover {
+      opacity: .75;
+    }
+  }
+}
+
+
+#todo-list,
+#criteria-list {
+
+  tbody > tr:first-child {
+    td { border-top-color: transparent }
+  }
+
+  .no-items {
+    height: 44px;
+    padding-left: 6px;
+    font-style: italic;
+  }
+}
+
+
+#todo-list {
+
+  tbody {
+    td {
+      position: relative;
+    }
+    tr.edition,
+    tr:hover,
+    tr.focus {
+      td { padding-right: 52px; }
+    }
+  }
+
+  tfoot {
+    & > tr > td {
+      padding-right: 0;
+    }
+  }
+
+  td {
+    input {
+      padding-left: 6px;
+    }
+  }
+
+  tr.edition {
+    .col-tools {
+      right: 2px;
+    }
+  }
+
+  .col-tools {
+    position: absolute;
+    top: 6px;
+    right: 4px;
+
+    & > .btn-icon {
+      line-height: 34px;
+    }
+    .spinner {
+      margin-top: 10px;
+      margin-right: 30px;
+    }
+  }
+
+}
+
+
+#criteria-list {
+
+  td.score {
+    width: 82px;
+
+    .total-score {
+      display: inline-block;
+      width: 44px;
+      max-width: 44px;
+      text-align: right;
+    }
+    p {
+      padding-left: 0;
+    }
+    span.total-score {
+      padding-right: 15px;
+    }
+  }
+
+  td.scale {
+    width: 68px;
+  }
+
+  tr.edition {
+    .-cancel {
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+  }
+
+  &.lock-edit {
+    .-edit,
+    .-delete,
+    tr:last-child .-save {
+      display: none !important;
+    }
+  }
+
+}
+
+
+#primitives-assign-screen {
+
+  .treeview-box {
+    padding: 10px 10px 10px 16px;
+    border: 1px solid @material-border;
+    max-height: calc(99vh ~"-" 220px);
+    overflow-y: auto;
+
+    & > ul { margin-bottom: 0 }
+
+    .checkbox-custom {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+  }
+
+}
+
+
+#by-resource-treeview,
+#primitives-assign-screen {
+
+  ul {
+    list-style-type: none;
+  }
+
+  ul.treeview-list {
+    padding-left: 0;
+
+    // solamente el primer nivel será en negritas
+    & > li > label {
+      font-weight: 500;
+    }
+
+    li {
+      cursor: pointer;
+
+      li:hover {
+        background-color: @material-hover;
+      }
+      & > label {
+        display: block;
+        padding: 2px 0 2px;
+        margin-bottom: 0;
+      }
+    }
+
+    li.activable {
+      padding: 2px;   // this has no label
+    }
+
+    ul {
+      padding-left: 20px;
+      background-color: white;
+    }
+  }
+
+}
+
+
+#by-resource-treeview {
+  padding-left: 30px;
+  padding-right: 6%;
+
+  ul.treeview-list > li {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+
+}
+
+
+#by-resource-container {
+
+  .sortable-tasks {
+    padding-right: 5px;
+    padding-left: 25px;
+
+    & > ul {
+      padding: 5px;
+    }
+  }
+
+  .sortable-ghost {
+    opacity: .3;
+    outline: @text-color solid 2px;
+  }
+
+  .list-group-item {
+    border: 1px solid lighten(@remark-fore-color, 25%);
+    border-radius: 4px;
+    margin-bottom: 5px;
+    cursor: move;
+    counter-increment: tasks;
+    position: relative;
+  }
+
+  .fa-bars {
+    color: lighten(@remark-fore-color, 25%);
+    margin-right: 10px;
+
+    &:hover {
+      color: @remark-fore-color;
+      text-decoration: none;
+    }
+  }
+
+  form {
+    padding-top: 4px;
+    margin-bottom: 22px;
+
+    .left-icon-line {
+      padding-right: 8px;
+    }
+  }
+
+  .resource-path {
+    margin-top: 0;
+    margin-bottom: 18px;
+  }
+
+  &.showing-results {
+
+    &:not(.have-results) {
+      #by-resource-tasks-to-assign > ul:empty {
+        padding-left: 22px;
+
+        &:after {
+          content: "No se encontraron tareas.";
+          line-height: 44px;
+          font-style: italic;
+        }
+      }
+    }
+
+    &.have-results {
+      #by-resource-tasks-to-assign > ul {
+        min-height: 56px;
+      }
+
+      #by-resource-task-list > ul:empty {
+        padding: 5px 0 5px 22px;
+        border-radius: @border-radius-base;
+        border: 1px solid lighten(@knotion-color-secondary-light, 10%);
+        background-color: lighten(@knotion-color-secondary-light, 20%);
+
+        &:after {
+          content: "Arrastra una tarea a esta zona...";
+          line-height: 44px;
+        }
+      }
+    }
+  }
+
+  .tools {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+  }
+}
+
+
+#by-resource-tasks-to-assign {
+
+  & > ul {
+    margin-bottom: 22px;
+    border-radius: @border-radius-base;
+    border: 1px solid lighten(@knotion-color-secondary-light, 10%);
+    background-color: lighten(@knotion-color-secondary-light, 20%);
+
+    & > li:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .-unassign {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+
+#by-resource-task-list {
+
+  .list-group-item {
+    &:before {
+      content: counter(tasks);
+      position: absolute;
+      left: -20px;
+    }
+  }
+
+}
+
+
+#primitives-filter {
+
+  input {
+    border: none;
+  }
+
+  .fa-search {
+    color: @knotion-color-primary;
+    margin-right: 5px;
+  }
+
+}

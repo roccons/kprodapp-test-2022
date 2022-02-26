@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Knotion Production">
+    <meta name="author" content="Habitat Web">
+    <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Knotion Resource Bank</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <style type="text/css">
+      body {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        color: white;
+        background: #313f4d none;
+        font: normal large/1.5 sans-serif;
+      }
+      .content {
+        width: 100%;
+        max-width: 520px;
+        padding: 0 3em;
+        margin: 5em auto 1em auto;
+        text-align: center;
+      }
+      .content a,
+      .content a:visited
+      .content a:active {
+        color: #9fc5ea;
+        text-decoration: none;
+      }
+      .content a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <p><img src="images/error.png" width="75" alt="Bloqueado"></p>
+      <p>La aplicación se ha bloqueado debido a un error.</p>
+      <p id="message"></p>
+      <p><small>Puedes <a href="/">reintentarlo</a>.<br>
+        Si el error vuelve a presentarse, por favor notifícalo al administrador.</small></p>
+    </div>
+  </body>
+  <script>
+    function showError(err) {
+      document.getElementById('message').innerHTML = String(err).replace(/\n/g, '<br>')
+    }
+
+    function findError(msgs) {
+      for (i = 0; i < msgs.length; i++) {
+        var o = msgs[i]
+        if (o.type === 'Error') {
+          showError(o.message)
+          break
+        }
+      }
+    }
+
+    if (~location.search.indexOf('e=401')) {
+      showError('Tu sesión ha expirado y no fue posible abrir la página de login.')
+
+    } else if (typeof Storage !== 'undefined') {
+      var json = window.localStorage.getItem('prodLogInfo')
+      var logs = false
+      if (json) {
+        try {
+          logs = JSON.parse(json)
+        } catch (_) {/**/}
+      }
+      if (logs instanceof Array && logs.length) {
+        findError(logs)
+      }
+    }
+  </script>
+</html>

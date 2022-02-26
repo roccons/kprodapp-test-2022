@@ -1,0 +1,76 @@
+-var _editExtra = _fullEdit && !resource_translated_id
+-var languages = App.catalogs.get('form_field_options').requisitions['language']
+if (_editExtra)
+  -
+    grades = App.catalogs.get('grades')
+    cicles = App.catalogs.get('cicle')
+    pathways = _catalogs.pathway
+    challenges = _catalogs.challenge
+
+hr
+#details-extra-info
+  .form-group
+    label.control-label.col-xs-4(for="f_cicle") Ciclo
+      if _editExtra
+        |  *
+    if _editExtra
+      select.form-control#f_cicle(name='cicle' required tabindex=_tabidx++)
+        option(value="" selected=!cicle)
+        each _cicle in cicles
+          option(value=_cicle selected=_cicle===cicle)= _cicle
+    else
+      p.form-control-static.col-xs-8= cicle
+
+  .form-group
+    label.control-label.col-xs-4(for="f_grade") Grado
+      if _editExtra
+        |  *
+    if _editExtra
+      select.form-control#f_grade(name='grade' required tabindex=_tabidx++)
+        option(value="" selected=!grade)
+        each _grade in grades
+          option(value=_grade.name selected=_grade.name===grade)= _grade.name
+    else
+      p.form-control-static.col-xs-8= grade
+
+  .form-group
+    label.control-label.col-xs-4 Idioma
+      if _editExtra
+        |  *
+    if _editExtra
+      select.form-control#f_language(name='language')
+          option(value="" selected=!language)
+          each _language in languages
+            option(value=_language.value selected=_language.value===language)= _language.name
+    else
+      p.form-control-static.col-xs-8= languages.find( function (lang) { return lang.value === language}).name
+    .form-group
+      label.control-label.col-xs-4(for="f_pathway") Pathway
+      if _editExtra
+        select.form-control#f_pathway(name='pathway')
+          option(value="" selected=!pathway)
+          each _pathway in pathways
+            option(value=_pathway selected=_pathway===pathway)= _pathway
+      else
+        p.form-control-static.col-xs-8= pathway
+
+    .form-group
+      label.control-label.col-xs-4(for="f_challenge") Reto
+        if _editExtra
+          |  *
+      if _editExtra
+        select.form-control#f_challenge(name='challenge' required tabindex=_tabidx++)
+          option(value="" selected=!challenge)
+          each _challenge in challenges
+            option(value=_challenge selected=_challenge===challenge)= _challenge
+      else
+        p.form-control-static.col-xs-8= challenge
+    if session != null
+      .form-group
+        label.control-label.col-xs-4 Sesión
+        p.form-control-static.col-xs-8= session
+
+  if step != null
+    .form-group
+      label.control-label.col-xs-4 Step
+      p.form-control-static.col-xs-8= step

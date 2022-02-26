@@ -1,0 +1,65 @@
+-
+  var sanitize = require('scripts/sanitize')
+  var fields   = App.catalogs.get('form_field_options').requisitions
+
+  // value comes as '0', '1', ...
+  function getRadioValue(name, value) {
+    if (!value) return false
+    var info = fields[name]
+    return info && info[value] ? info[value].value : String(value)
+  }
+
+  function getSelectValue(name, value) {
+    value = value ? String(value) : ''
+    if (value) {
+      var info = fields[name]
+      if (info) {
+        var vals = value.split(',')
+        for (var i = 0; i < vals.length; i++) {
+          var sval = vals[i]
+          var item = info.find(function (o) { return o.value == sval })
+          if (item) vals[i] = item.name
+        }
+        value = vals.join(', ')
+      }
+    }
+    return value
+  }
+
+  function asToken(p) {
+    return '<span class="readonly-token">' + p.trim() + '</span>'
+  }
+
+
+mixin writeProperties(_props, caps)
+  - if (!caps) caps = ''
+  - var rows = []
+  - // Crea filas de dos columnas
+  - for (var i = 0, j = _props.length; i < j; i+=2) { rows.push(_props.slice(i, i + 2)) }
+
+  each row in rows
+    .row.specification
+      each prop in row
+        +createRow(prop)
+
+
+mixin createRow (prop)
+  .form-group.compact.col-md-6
+    - var ftype = prop.input_type || ''
+
+    label.control-label(id="label-" + prop.name)= prop.translation
+
+    if ftype === 'checkbox'
+      p.form-control-static!= ~~prop.value ? 'Sí' : 'No'
+
+    else if ftype === 'radio'
+      p.form-control-static!= getRadioValue(prop.name, prop.value)
+
+    else if ftype.indexOf('select') === 0
+      p.form-control-static!= getSelectValue(prop.name, prop.value)
+
+    else if ftype === 'Tokenfield'
+      p.form-control-static!= prop.value ? prop.value.split(',').map(asToken).join('') : ''
+
+    else
+      p.form-control-static!= sanitize(prop.value, ftype === 'url')

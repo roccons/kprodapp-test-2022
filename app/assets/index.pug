@@ -1,0 +1,47 @@
+doctype html
+
+- var ZDATE = new Date().toJSON().substr(0, 19) + '.0Z'
+
+html.css-menubar(lang="es")
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0')
+    meta(name='description' content='Knotion Production Platform')
+    meta(name='author' content='Habitat Web')
+    meta(name='robots' content='noindex,nofollow')
+    meta(http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate")
+    meta(http-equiv="Pragma" content="no-cache")
+    meta(http-equiv="Expires" content="0")
+
+    title Knotion Production Platform
+
+    <!--[if IE]>
+    meta(http-equiv='refresh' content!='0;URL=upgrade.html')
+    <![endif]-->
+
+    link(rel='shortcut icon' href='favicon.ico')
+
+    //- Stylesheets
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500')
+    link(rel='stylesheet' href='css/remark.css')
+    link(rel='stylesheet' href='app.css?crc')
+
+    //- Breakpoints
+    script(src='header.js?crc')
+
+  body.login
+    script.
+      document.body._env=''
+      document.body._url=''
+
+    .loader.loader-default
+
+    script(src="js/jq224-bs336.js")
+    script(src='app.js?crc')
+
+    script.
+      $(document).ready(function () {
+        require('config').buildtime = new Date('!{ZDATE}')
+        require('app')  // auto-runs
+      })

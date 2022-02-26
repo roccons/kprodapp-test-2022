@@ -1,0 +1,52 @@
+@import "app/styles/_knotion-colors.less";
+
+@-order-task-row-height: (@line-height-px + 17px);  // agrega 8px padding top/bottom + border
+
+#order-task-new {
+
+  .order-task-new-list-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: (@-order-task-row-height * 3);
+    max-height: calc(99vh ~"-" 260px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  table thead {
+    position: sticky;
+  }
+  th,
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+  tbody tr {
+    cursor: pointer;
+
+    &:first-child > td {
+      border-top: none;
+    }
+  }
+  .loader-wrapper {
+    margin-top: 35px;
+    padding-right: 20px;
+  }
+}
+
+#order-task-edit {
+  table.task-duration-box {
+    min-width: 250px;
+    tbody tr > td:nth-child(odd) {
+      padding-left: 2px;
+      padding-right: 10px;
+    }
+  }
+
+}

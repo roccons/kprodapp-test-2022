@@ -1,0 +1,90 @@
+- var catalogs = App.catalogs.get('form_field_options').requisitions
+- var process_types = []
+- process_types.push({ value: 0, name: 'none' })
+- process_types = process_types.concat(catalogs['process_type'])
+- var process_type_obj = process_types.find(pt => pt.value === process_type)
+- var process_type_value = process_type_obj ? process_type_obj.name : 'none'
+- var sanitize = require('scripts/sanitize')
+-
+  function getCatForType(id) {
+    return App.catalogs.get('resource_types')
+           .filter(function (c) { return c.resource_type_group_id == id })
+  }
+  function getCatForVersion(id) {
+    return App.catalogs.get('resource_versions')
+           .filter(function (c) { return c.resource_type_id == id })
+  }
+
+include _create-properties.pug
+
+section.generals
+
+  .detail-content-header
+    if user_capabilities['processtype-edit']
+      .detail-pane-title
+        select.form-control.select-process-type(name="f_process_type" id="f_process_type" tabidx=_state.tabidx++)
+          each ptype in process_types
+            option(value=ptype.value selected=(ptype.value === process_type))= processTypesText[ptype.name]
+    else
+      .row.detail-pane-title
+        .col-sm-12.detail-content-header
+          h4= processTypesText[process_type_value]
+            if is_translation
+              small TRADUCCIÓN
+
+  .requisition-detail-box
+    .row
+      .col-sm-4
+        .form-group
+          label.control-label Category *
+          select.form-control(name="resource_type_group_id" required tabindex=_state.tabidx++)
+            option(selected=!resource_type_group_id)
+            each item in App.catalogs.get('resource_type_groups')
+              option(value=item.id selected=(resource_type_group_id === item.id))= item.name
+      .col-sm-4
+        .form-group
+          label.control-label Type *
+          select.form-control(name="resource_type_id"
+              disabled=!resource_type_group_id required tabindex=_state.tabidx++)
+            if resource_type_group_id
+              option
+              each item in getCatForType(~~resource_type_group_id)
+                option(value=item.id selected=(resource_type_id === item.id))= item.name
+      .col-sm-4
+        .form-group
+          label.control-label Version *
+          select.form-control(name="resource_version_id"
+              disabled=!resource_type_id required tabindex=_state.tabidx++)
+            if resource_type_id
+              option
+              each item in getCatForVersion(~~resource_type_id)
+                option(value=item.id selected=(resource_version_id === item.id))= item.name
+
+section.specs.form-horizontal
+
+  div
+    h4 Especificaciones
+    div
+  .row
+    .col-sm-12
+      if _fullEdit
+        +createProperties(_state, _commonProps, true, 'f_')
+
+      else
+        each spec in _commonProps
+          .form-group
+            label.col-sm-3.control-label= spec.translation
+            .col-sm-9: p.form-control-static!= sanitize(spec.value)
+
+      //- Classificationkb
+      .col-sm-12#classificationkb-table
+
+      //- GlobalKnotion
+      .row.specification#global-knotion
+
+  .middle-line
+    h4 Propiedades adicionales
+    div
+  .row
+    #detail-extra-props.col-sm-12
+      +createProperties(_state, _extraProps)

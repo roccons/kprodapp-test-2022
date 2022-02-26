@@ -1,0 +1,173 @@
+@import "app/styles/_knotion-colors.less";
+@import "app/styles/icons/_fa-variables.less";
+@import "app/styles/icons/_mixins.less";
+
+@fix-filter-width: 240px;
+
+
+// Este es el contenedor del sidebar del filtro
+#filters-sidebar-wrapper {
+  position: fixed;
+  top: (@topbar-height + 6px);
+  height: calc(100% ~"-" (@topbar-height + 12px));
+  width: @fix-filter-width;
+  padding: 16px 8px 6px 12px;
+  border: 1px solid @material-border;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: white;
+  overflow: hidden;
+  z-index: 100;
+
+  // transisiones
+  margin-left: -(@fix-filter-width + 4px);
+  opacity: 0;
+  transition: margin-left 200ms linear, opacity 120ms linear 20ms;
+
+  h4 {
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .actions {
+    display: none;
+    float: right;
+
+    span {
+      display: inline-block;
+      width: auto;
+      padding: 0 3px;
+      line-height: 32px;
+      cursor: pointer;
+    }
+
+    .toggle-filters > * {
+      font-size: 18px;
+    }
+  }
+
+  & > .scroll-box {
+    position: relative;
+    height: calc(100% ~"-" 40px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+}
+
+
+#filters-sidebar-form {
+  padding-top: 4px;
+  padding-right: 4px;
+
+  .form-group {
+    margin-bottom: 12px;
+
+    & > label {
+      display: block;
+
+      span {
+        display: none;
+      }
+    }
+
+    &.has-value {
+
+      & > label {
+        position: relative;
+        color: @brand-primary;
+
+        & > span {
+          display: block;
+          position: absolute;
+          top: 0;
+          right: 16px;
+          color: @text-color;
+          cursor: pointer;
+          &::before {
+            content: @fa-var-minus-circle; //@fa-var-times-circle-o;
+            .fa-icon();
+          }
+          &:hover {
+            color: @brand-primary;
+          }
+        }
+      }
+    }
+  }
+
+  .select-opts {
+    margin: 5px 0 5px 4px;
+  }
+
+  .apply-filters {
+    min-width: 80px;
+  }
+
+  .clean-filters {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    min-width: 80px;
+  }
+}
+
+
+// most left bar for showing the Filter panel again
+#filter-unhide {
+  position: fixed;
+  top: (@topbar-height + 30px);
+  height: 34px;
+  width: 21px;
+  text-align: center;
+  color: white;
+  background-color: @brand-primary;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  opacity: 0.35;
+  transition: opacity 300ms linear 150ms;
+  z-index: 101;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1.0 !important;
+    transition: opacity 200ms linear;
+  }
+  i {
+    line-height: 32px;
+    font-size: 18px;
+  }
+}
+
+
+#main-wrapper.filters-sidebar-open {
+
+  #main-page {
+    margin-left: @fix-filter-width - 8px;
+  }
+
+  #filters-sidebar-wrapper {
+    margin-left: -1px;
+    opacity: 1;
+
+    & > .actions {
+      display: block;
+    }
+  }
+
+  #filter-unhide {
+    opacity: 0;
+    transition: opacity 200ms linear;
+    z-index: 99;
+  }
+}
+
+#main-page {
+  transition: margin-left 200ms linear;
+}
+
+
+#filter-status {
+  font-size: (@font-size-base);
+  font-weight: 400;
+  font-style: italic;
+}

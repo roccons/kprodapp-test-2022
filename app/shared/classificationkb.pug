@@ -1,0 +1,96 @@
+-
+  const encode = require('scripts/encode')
+
+  const requisition = isRequisition ? data : false
+  const country = isRequisition ?
+    requisition.country ? requisition.country : null :
+    data.master_requisition.country ? data.master_requisition.country : null
+
+  const getCountry = data => {
+    const num = requisition ?
+      requisition.country_id :
+      data.master_requisition ? data.master_requisition.country_id : null
+
+    if (typeof num === 'number') return num
+
+    const rec = App.catalogs.get('country').find(c => c.name === country)
+    return rec && rec.id || 1
+  }
+
+  const makeOpts = (country, language) => {
+    const grades = App.catalogs.get('grades')
+
+    return grades
+      .filter(o => o.country_id === country)
+      .map(o => {
+        const name = language === 'ES' ? o.name_es : o.name
+
+        return `<option value="${o.key}">${encode(name)}</option>`
+      })
+  }
+
+#classif-editor.modal.fade(role="dialog")
+  .modal-dialog.modal-center.modal-lg
+    .modal-content
+      header.modal-header.compact-header
+        button.close.wb-close(type="button" data-dismiss="modal" tabindex="200" title="Cerrar")
+        h3.modal-title Clasificación
+
+      form#classif-form.form-material
+        input(type="hidden" name="requisition_id" value=data.requisition_id)
+        input(type="hidden" name="classificationkb" value=data.classificationkb ? JSON.stringify(data.classificationkb) : '[]')
+
+        .modal-body
+          .row
+            .col-sm-6
+              .form-group.form-inline
+                label.control-label(for="classif-grade") Grado (#{country})
+                select#classif-grade.form-control(name="grade" value=data.grade style="min-width:200px")
+                  option(value='')
+                  != makeOpts(getCountry(data), data.language)
+
+          .row
+            .col-sm-4
+              .form-group
+                label.control-label(for="classif-area") Área de conocimiento
+                select#classif-area.form-control(name="area" value=data.area disabled)
+
+            .col-sm-3
+              .form-group
+                label.control-label(for="classif-axis") Eje
+                select#classif-axis.form-control(name="axis" value=data.axis disabled)
+
+            .col-sm-4
+              .form-group
+                label.control-label(for="classif-theme") Tema
+                select#classif-theme.form-control(name="theme" value=data.theme disabled)
+
+            .col-sm-1
+              label.control-label!= '&nbsp;'
+              button#classif-btn-add.btn.btn-pure.btn-primary(
+                  type="button" title="Agregar clasificación" disabled)
+                i.wb-plus
+
+          hr
+          .row
+            .col-sm-3
+              .form-group
+                label.control-label(for="classif-grade") Grado
+
+            .col-sm-3
+              .form-group
+                label.control-label(for="classif-area") Área de conocimiento
+
+            .col-sm-2
+              .form-group
+                label.control-label(for="classif-axis") Eje
+
+            .col-sm-3
+              .form-group
+                label.control-label(for="classif-theme") Tema
+
+          #classif-items(style='min-height:24px')
+
+        .modal-footer
+          button#classif-btn-cancel.btn.btn-default(type="button" data-dismiss="modal") Cancelar
+          button#classif-btn-save.btn.btn-primary(type="submit" disabled)=isRequisition ? 'Aceptar' : 'Guardar'

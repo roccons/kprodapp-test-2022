@@ -1,0 +1,18 @@
+#globaknotion-container-requisitions
+  label.control-label Global Knotion relacionado
+  .global-knotion-container
+    each item in knotionCat
+      -
+        globalKnotion = globalKnotion ? globalKnotion : []
+        const klass = `globalkn-icon ${globalKnotion.includes(item.id) ? '' : 'un'}assigned`
+
+      span(
+        class=klass
+        title=item[globalKNName]
+        data-uid=item.id
+        key=item[globalKNName]
+      )
+        img.globalkn-btn(
+          src=`${iconUrlBase}/${item.icon}`
+          class=isPageEdit ? 'is-editable' : ''
+        )

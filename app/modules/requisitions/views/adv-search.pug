@@ -1,0 +1,117 @@
+//--
+  Búsqueda avanzada de requisiciones
+- function _arr(a) { return a ? a.join(',') : '' }
+- if (!('requisition_properties' in data)) data.requisition_properties = []
+- 
+  const processTypes = [
+    { value: 0, name: '(Proceso no especificado)' }, 
+    { value: 1, name: 'Usar recurso sin cambios' },
+    { value: 2, name: 'Actualizar recurso existente' },
+    { value: 3, name: 'Nuevo recurso a partir de uno existente' }
+  ]
+
+#advanced-search.modal.fade(role="dialog" tabindex="-1")
+  .modal-dialog.modal-lg
+    .modal-content
+      form#advanced-search-form.form-material
+
+        header.modal-header.compact-header
+          button.close.wb-close(type="button" data-dismiss="modal" title="Cerrar")
+          h3.modal-title Búsqueda avanzada
+
+        section.modal-body
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-process_type") Proceso
+                select#as-process_type.form-control(name="f_process_type" multiple=true) 
+                  each process in processTypes
+                    option(value=process.value selected=data.process_type ? data.process_type.includes(process.value.toString()) : false)= process.name
+              
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-production_key") Claves de producción
+                input#as-production_key.form-control(
+                  name="f_production_key" value=_arr(data.production_key))
+
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-resource_id") ID de autoría
+                input#as-resource_id.form-control.has-integer(
+                  name="f_resource_id" maxlength="10" value=data.resource_id)
+
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-resource_translated_id") ID de asociación
+                input#as-resource_translated_id.form-control.has-integer(
+                  name="f_resource_translated_id" maxlength="10" value=data.resource_translated_id)
+
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-resource_id") ID de referencia
+                input#as-reference_resource_id.form-control.has-integer(
+                  name="f_reference_resource_id" maxlength="10" value=data.reference_resource_id)
+
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-krb_resource_id") ID de Resource Bank
+                input#as-krb_resource_id.form-control.has-integer(
+                  name="f_krb_resource_id" maxlength="10" value=data.krb_resource_id)
+
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-resource_title") Título
+                input#as-resource_title.form-control(
+                  name="f_resource_title" maxlength="45" value=data.resource_title)
+
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-notes") Notas
+                input#as-notes.form-control(
+                  name="f_notes" value=data.notes)
+
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-script") Script
+                input#as-script.form-control(
+                  name="f_script" value=data.script)
+
+            .col-sm-6
+              .form-group
+                label.control-label(for="as-quicktags") QuickTags
+                input#as-quicktags.form-control.has-tokens(
+                  name="f_quicktags" value=_arr(data.quicktags))
+
+          .row.margin-bottom-5
+            .col-sm-6
+              .form-group.margin-bottom-0
+
+                label.control-label(for="as-tags") Contiene:
+                .checkbox-custom.checkbox-primary
+                  input#as-reality.form-control(type="checkbox"
+                    name="f_requisition_properties-augmented_reality" value="1"
+                    checked=data.requisition_properties.includes('augmented_reality'))
+                  label.control-label(for="as-reality") Augmented Reality
+
+                .checkbox-custom.checkbox-primary
+                  input#as-evaluation.form-control(type="checkbox"
+                    name="f_requisition_properties-heedfulness_evaluation" value="1"
+                    checked=data.requisition_properties.includes('heedfulness_evaluation'))
+                  label.control-label(for="as-evaluation") Heedfullness Evaluation
+
+                .checkbox-custom.checkbox-primary
+                  input#as-audio.form-control(type="checkbox"
+                    name="f_requisition_properties-audio" value="1"
+                    checked=data.requisition_properties.includes('audio'))
+                  label.control-label(for="as-audio") Audio
+
+        footer.modal-footer
+          .pull-left
+            button.btn.btn-default.button-form.clean-filters(
+              type="button" style="margin-left:0") Quitar filtros
+          button.btn.btn-default.cancel-form(type="button") Limpiar
+          button.btn.btn-primary.submit-form(type="submit") Buscar

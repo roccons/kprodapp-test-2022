@@ -1,0 +1,65 @@
+# Ignore docs files
+_gh_pages
+_site
+.ruby-version
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+*.zip
+*~
+*.sass-cache
+
+# OS or Editor folders
+._*
+.cache
+.DS_Store
+.env
+.idea
+.project
+.settings
+.tmproj
+*.esproj
+*.komodoproject
+.komodotools
+*.sublime-project
+*.sublime-workspace
+nbproject
+Icon?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Folders to ignore
+bower_components/
+node_modules/
+test-files/
+coverage/
+cov-int/
+lib-cov/
+
+# app
+tmp/
+public/
+aws/
+_remark/
+report_status.html
+
+Homestead.yaml
+Homestead.json
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+uploader_popup/
+yarn.lock
+package-lock.json

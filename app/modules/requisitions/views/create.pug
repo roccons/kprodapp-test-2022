@@ -1,0 +1,62 @@
+-
+  var process_types = App.catalogs.get('form_field_options').requisitions['process_type']
+  var process_type_obj = process_types.find(pt => pt.value === process_type)
+  var process_type_name = process_type_obj ? process_type_obj.name : ''
+
+
+.page-header.bg-gray
+  if _fromAuth
+    h2.main-title Crear requisición
+  else
+    a.link(href='#/requisiciones') #[span.back-arrow] Panel de Requisiciones
+
+#requis-detail.page-content.wrapper
+
+  form#detail-form.form-material.-editmode.-requisitions
+    input(type="hidden", name="krb_resource_id")
+    input(type="hidden", name="reference_resource_id")
+
+    #form-error-box
+
+    //- El tabindex inicia en 20 para el botón Cancelar, pero el primero
+    //- en tomar el focus será el título con tabindex 22
+    .panel-body
+      .row
+        .col-sm-7.col-xl-8
+          #detail-title.requisition-detail-title
+            .center-flex
+              div= classification || 'Curricular'
+            .title.media-body
+              if _fullEdit
+                input.media-heading.col-sm-10.form-control(name="resource_title"
+                  value=resource_title
+                  placeholder="Ingresa el título de la requisición *"
+                  maxlength="140" required autofocus tabindex=_state.tabidx + 2)
+              else
+                h3.media-heading= resource_title
+
+        .col-sm-5.text-right.col-xl-4
+          #detail-actions.d-flex
+            button#detail-cancel-form.btn.bold.-action-cancel(
+                type="button" title="Cancelar" tabindex=_state.tabidx) CANCELAR
+            button#detail-submit-form.btn.btn-success.-action-edit.bold(
+                type="button" title="Guardar" tabindex=_state.tabidx + 1) GUARDAR
+
+        - _state.tabidx += 3
+
+      .row
+        #detail-left-pane.col-sm-7.col-xl-8
+          .detail-pane
+            .process-type-indicator(class=process_type_name)
+            ul#detail-nav-tabs.nav.nav-tabs.nav-tabs-form(role="tablist")
+              li.active.main-tab
+                a(data-toggle="tab" href="#detail-main") Detalles
+
+            #detail-content.tab-content
+
+              #detail-main.tab-pane.fade.in.active
+                include inc/_create-details.pug
+
+        #detail-right-pane.col-sm-5.col-xl-4
+          .detail-pane.detail-pane-right
+            include inc/_detail-sidebar.pug

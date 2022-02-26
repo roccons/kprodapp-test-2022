@@ -1,0 +1,218 @@
+/*
+  Overrides some Remark styles
+*/
+@site-footer-height: 39px;
+
+body {
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  & > .page {
+    opacity: 1;
+    background: white !important;
+    min-height: calc(100% ~'-' @site-footer-height);
+  }
+
+  // the spinner
+  &.site-menubar-fold > .loader {
+    margin-left: -15px;
+  }
+  &.site-menubar-unfold > .loader {
+    margin-left: 85px;
+  }
+  & > .loader {
+    pointer-events: none;
+    z-index: 1800;  // bootstrap modals has x-index 1700
+  }
+
+  &.site-menubar-unfold #site-navbar .navbar-brand-logo {
+    display: none;
+  }
+}
+
+#site-navbar {
+  .navbar-brand-text img {
+    display: inline-block;
+    width: 82px;
+  }
+}
+
+@media (min-width: 767px) {
+  #site-navbar .navbar-brand-text img {
+    margin-left: 33px !important;
+  }
+}
+
+#site-navbar-collapse {
+
+  & h1 {
+    color: white;
+    font-size: 22px;
+    text-align: center;
+    padding-right: 120px;
+  }
+
+  & > .navbar-toolbar > li > a {
+    line-height: 20px
+  }
+}
+
+#site-menubar {
+  .site-menubar-footer > * {
+    cursor: pointer;
+  }
+}
+
+#main-menu > .site-menu-item.active {
+  background-color: lighten(@knotion-color-menu-blue-dark, 2%);
+}
+
+/*
+  Desplegar en múltiples líneas los nombres de opciones largos.
+*/
+body.site-menubar-fold #main-menu > .site-menu-item {
+  & > a {
+    text-align: center;
+    & > .site-menu-title {
+      position: static;
+      display: inline-block !important;
+      padding: 2px 0;
+      max-height: ~"calc(100% - 8px)";
+      vertical-align: middle;
+      line-height: 16px;
+      white-space: normal;
+    }
+  }
+  & > a:hover {
+    & > .site-menu-icon {
+      visibility: hidden;
+      opacity: 0;
+    }
+    & > .site-menu-title {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+#site-footer {
+  height: @site-footer-height;
+  padding: 10px 12px 0;
+  font-size: 12px;
+}
+
+#main-page {
+  & > .page-header {
+    width: 100%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    h2.main-title {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  & > .page-content > .panel {
+    box-shadow: none;
+    margin-bottom: 0;
+  }
+  .panel-body {
+    padding: 0;
+  }
+}
+
+.form-group {
+  margin-bottom: 16px; // Bootstrap regular
+}
+
+// avoids cut the icons
+.fa:before,
+.icon:not(.hamburger):before {
+  margin-left: 1px;
+  margin-right: 1px;
+}
+
+.btn .icon {
+  width: 1.2em;
+  margin: -1px 1px 0;
+}
+
+// Bootstrap .dropdown adjust
+.dropdown-menu {
+  & > li > a {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  & > .dropdown-header {
+    font-style: italic;
+    font-weight: 300;
+    color: #a3afb7;
+  }
+}
+
+.nav-tabs > li.active {
+  & > a,
+  & > a:focus,
+  & > a:hover {
+    color: @brand-primary;
+    background-color: white;
+    border-color: @material-border;
+    border-bottom-color: transparent;
+  }
+}
+
+.btn-default[disabled],
+.btn-default[disabled]:hover {
+  border-color: @material-border;
+}
+
+// Sin esto algunos controles "material" no se ven bien.
+select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+}
+
+select.form-control {
+  padding-left: 2px;
+}
+
+// Evita que los H5 corten caracteres debido al line-height.
+h5 {
+  line-height: @line-height-base;
+  margin-bottom: 9px;
+}
+
+textarea,
+.form-material textarea.form-control {
+  resize: vertical;
+  min-height: 36px;
+}
+
+.form-material textarea.form-control {
+  padding-top: 6px;
+}
+
+blockquote {
+  padding: 7px 15px;
+  font-size: @font-size-base;
+  font-style: italic;
+  color: fade(@text-color, 80%);
+  border-left: 3px solid lighten(@remark-border, 20%);
+}
+
+
+/*
+  Deshabilita el color amarillo en los inputs llenados con autocomplete en Chrome.
+  stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
+*/
+input:-webkit-autofill {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    -webkit-text-fill-color: @input-color;
+    //-webkit-box-shadow: 0 0 0px 1000px @input-bg inset;
+    transition: background-color 9999s ease-in-out 0s;
+    transition-delay: 9999s;
+    transition-property: background-color, color;
+    border-bottom: thin solid @material-border;
+  }
+}

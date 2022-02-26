@@ -1,0 +1,117 @@
+include inc/_write-properties.pug
+
+.page-header
+  a.link(href='#/requisiciones') #[span.back-arrow] Panel de Requisiciones
+
+#requis-detail.page-content
+
+  - var canEdit = user_capabilities.edit && status !== $_REQ_ST.COMPLETED
+
+  //- La clase -editable se pone aquí pues el tab inicialmente activo (Detalles) es editable
+  form#detail-form.form-material(data-edit-require="edit" class=(canEdit ? '-editable' : '-readonly'))
+
+    #form-error-box
+
+    .row
+      .col-sm-9
+        #detail-title.margin-bottom-5
+          .media
+            .media-body
+              p.pc-key.round-border= id
+              if ~_partials.indexOf('t')
+                input.media-heading.form-control(name="resource_title"
+                  value=resource_title
+                  placeholder="Ingresa el título de la requisición *"
+                  maxlength="140" required autofocus)
+              else
+                h3.media-heading= resource_title
+
+      .col-sm-3.text-right
+        #detail-actions.btn-floating-box
+
+          include detail-menu.pug
+
+    .row
+      .col-xs-12
+        p.margin-bottom-15.info-ids
+          include detail-info-ids.pug
+
+    .row
+      #detail-left-pane.col-sm-9
+
+        ul#detail-nav-tabs.nav.nav-tabs(role="tablist")
+          li.active.-can-edit.main-tab
+            a(data-toggle="tab" href="#detail-main") Detalles
+          li
+            a(data-toggle="tab" href="#detail-history") Historial
+
+        #detail-content.tab-content
+
+          #detail-main.tab-pane.fade.in.active
+
+            section
+              .middle-line
+                h4 Características generales del recurso
+                div
+
+              if needs_review
+                .row
+                  .col-sm-4
+                    label.control-label Category
+                    p.form-control-static= resource_type_group
+                  .col-sm-4
+                    label.control-label Type
+                    p.form-control-static= resource_type
+                  .col-sm-4
+                    label.control-label Version
+                    p.form-control-static= resource_version
+
+                .row.needs_review
+                  .col-sm-4
+                    p.form-control-static= review_data.resource_type_group
+                  .col-sm-4
+                    p.form-control-static= review_data.resource_type
+                  .col-sm-4
+                    p.form-control-static= review_data.resource_version
+
+                .row.text-center.margin-top-15(data-show-require="change-approve")
+                  button.btn.btn-default.-action-refuse(type="button" tabindex="1") Rechazar
+                  |  &nbsp; &nbsp;
+                  button.btn.btn-primary.-action-approve(type="button" tabindex="2") Aprobar
+
+              else
+                .row
+                  .col-sm-4
+                    label.control-label Category
+                    p.form-control-static= resource_type_group
+                  .col-sm-4
+                    label.control-label Type
+                    p.form-control-static= resource_type
+                  .col-sm-4
+                    label.control-label Version
+                    p.form-control-static= resource_version
+
+
+            section
+              .middle-line
+                h4 Especificaciones
+                div
+              +writeProperties(_commonProps, _partials)
+
+              .middle-line
+                h4 Propiedades adicionales
+                div
+              if typeof _storyboard == 'string'
+                .form-group.compact.required
+                  label.control-label Script/Storyboard
+                  input#script_storyboard.form-control(type="url"
+                    name='script_storyboard' value=_storyboard readonly)
+
+              +writeProperties(requisition_properties)
+
+          #detail-history.tab-pane.fade
+            include detail-history.pug
+
+      #detail-right-pane.col-sm-3
+        section
+          include inc/_detail-sidebar.pug

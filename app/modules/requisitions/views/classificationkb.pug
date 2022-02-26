@@ -1,0 +1,24 @@
+.form-group.compact
+  div(
+    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px"
+  )
+    label.control-label Classificación del recurso
+
+  table.table.table-condensed
+    thead
+      tr
+        th Grado
+        th Área de conocimiento
+        th Eje
+        th Tema
+    tbody
+      if !classification || classification.length === 0
+        tr
+          td Sin clasificación
+      else
+        each item in classification
+          tr
+            td=dict[item.grade]
+            td=dict[item.knowledgearea]
+            td=item.axis in dict ? dict[item.axis] : ''
+            td=item.theme in dict ? dict[item.theme] : ''

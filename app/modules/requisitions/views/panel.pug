@@ -1,0 +1,53 @@
+#panels-wrapper.clearfix
+
+  .page-header
+    h2.page-title= pageTitle
+    #filter-status
+
+  .page-content
+    #table-root.table-outer
+
+      //- [1:49 PM] Rodrigo: me está confirmando Roberto que sí metamos en un menú secundario
+      //-           las nuevas opciones globales del panel de req.
+      //- [1:50 PM] Rodrigo: y que dejemos afuera con su propio botón solamente quicktags y cambio de estatus.
+
+      .btn-group.hidden-xs(role="group" id=prefix + 'Toolbar')
+
+        a.btn.btn-default(role="button"
+            href="#/requisicion/nueva" title="Crear requisición")
+          i.wb-plus
+
+          a.btn.btn-default(role="button"
+              href="#/requisicion/11142/crear" title="Crear requisición desde Autoría" target="_blank")
+            span(style="font-weight:400") A+
+
+        button#adv-search-btn.btn.btn-default(
+            type="button" title="Búsqueda avanzada")
+          i.wb-search
+
+        button.btn.btn-default.needs-one.-action.-quicktags(
+            type="button" title="Agregar y quitar QuickTags" disabled)
+          i.wb-tag
+
+        button.btn.btn-default.needs-one.-action.-status(
+            type="button" title="Cambiar estatus" disabled)
+          i.fa-exchange
+
+        .btn-group(title="Otras acciones" disabled)
+          button#req-bulk-actions-button.btn.btn-default.dropdown-toggle.needs-one(alt="v"
+            type="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            style="padding-left:4px; padding-right:8px")
+            span.caret
+          ul#req-bulk-actions-menu.dropdown-menu(aria-labelledby="req-bulk-actions-button")
+            li.needs-one: a.-action.link.-assignedit(tabindex="0") Asignar editor...
+            li.divider(role="separator")
+            li.needs-one: a.-action.link.-approve(tabindex="0") Aprobar cambios
+            li.needs-one: a.-action.link.-generate(tabindex="0") Generar órdenes...
+            li.divider(role="separator")
+            li.needs-one: a.-action.link.-unlink-idkrb(class=classUnsetKRB tabindex="0") Desvincular recurso de R. bank
+            li.divider(role="separator")
+            li.needs-one: a.-action.link.-export(tabindex="0") Descargar CSV
+
+      table(data-role="table" id=prefix + 'Table')

@@ -1,0 +1,57 @@
+
+.popover-footer {
+  text-align: right;
+  margin: 0 20px 18px;
+  min-width: 17em;
+
+  button {
+    min-width: 7em;
+    text-align: center;
+
+    & + button {
+      margin-left: 8px;
+    }
+  }
+}
+
+
+.waitstate {
+  cursor: progress;
+
+  p, div, input, textarea, select, button, a {
+    cursor: wait;
+  }
+}
+
+
+// Bootstrap modal-dialog has 30+30 vertical margins
+.modal-dialog {
+
+  .modal-content {
+    padding: 8px;
+  }
+
+  .modal-footer .btn {
+    min-width: 8em;
+    & + .btn {
+      margin-left: 8px;
+    }
+  }
+
+  &.modal-sm .modal-footer .btn {
+    min-width: 7em;
+  }
+
+  &.modal-lg .modal-footer .btn {
+    min-width: 9em;
+  }
+
+  .compact-header {
+    margin-bottom: 0;
+    padding-bottom: 1px;
+  }
+
+  .modal-header .close {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,132 @@
+@import "./icons/_wb-variables.less";
+
+/*
+  El estilo "indeterminate" de los checkbox y otros detalles omitidos por Remark.
+  En el nivel .checkbox-custom usaremos .unknown
+*/
+.checkbox-custom {
+
+  &.unknown {
+    input + label {
+      &::after {
+        background-color: @material-border !important;
+        content: @wb-var-minus !important;
+      }
+    }
+  }
+
+  input:indeterminate[type="checkbox"] {
+
+    &:checked + label::after {
+      background-color: @material-border !important;
+      font-family: "Web Icons";
+      content: "\f192";             // @wb-var-check
+      color: @material-border;
+    }
+  }
+
+  input[type="checkbox"] + label.control-label,
+  input[type="radio"] + label.control-label {
+    font-weight: 400;
+  }
+}
+
+.checkbox-sm {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: (@font-size-base - 2px);
+
+  & label {
+    min-height: 20px;
+    line-height: 18px;
+  }
+}
+
+input[type=checkbox]:disabled + label,
+input[type=radio]:disabled + label {
+  pointer-events: none;
+  cursor: default;
+}
+
+.form-material {
+
+  .form-group.invalid label.control-label,
+  label.invalid {
+    color: @brand-warning;
+  }
+
+  .form-group.invalid .tokenfield.focus,
+  .tokenfield.invalid:focus,
+  .focus.invalid {
+    background-image: -webkit-linear-gradient(@material-red-border, @material-red-border),
+                      -webkit-linear-gradient(@material-border, @material-border);
+    background-image: linear-gradient(@material-red-border, @material-red-border),
+                      linear-gradient(@material-border, @material-border);
+    transition: background 0s easy-out;
+  }
+
+  .form-control {
+    background-color: @input-bg;
+  }
+}
+
+.btn-floating-box {
+  .btn {
+    padding: 8px;
+    i {
+      vertical-align: middle;
+    }
+  }
+}
+
+/*
+  Botones *-form con ancho mínimo y separación en los formularios.
+*/
+.button-form,
+.cancel-form,
+.submit-form {
+  min-width: 9em;
+  margin-left: 10px;
+}
+
+/*
+  Incluye en la clase .btn-default las características de .btn-ouline.
+*/
+.btn-default {
+  color: @input-color;
+  background-color: transparent;
+}
+
+.btn-default.active,
+.btn-default:active,
+.btn-default:focus,
+.btn-default:hover,
+.open > .dropdown-toggle.btn-default {
+  color: @input-color;
+  background-color: fade(@input-color, 10%);
+  border-color: @material-border;
+}
+
+.btn-default:disabled {
+  border-color: @material-border;
+}
+
+
+/*
+  Alerta que muestra errores en el form y los colores Knotion en los links.
+*/
+#form-error-box {
+  padding-right: 9%;
+}
+
+.alert-link {
+  cursor: pointer;
+}
+
+.alert-danger .alert-link {
+  color: @brand-danger;
+}
+
+.alert-warning .alert-link {
+  color: @brand-warning;
+}

@@ -1,0 +1,10 @@
+{
+  "STORE":              "requis-detail",
+  "MODULE_STARTED":     "details-started",
+  "MAIN_UPDATED":    "details-updated",
+  "STATUS_UPDATED":     "status-updated",
+  "HISTORY_UPDATED":    "history-updated",
+  "DELIVERIES_UPDATED": "deliveries-updated",
+  "NEED_READ_HISTORY":  "need-history",
+  "EDIT_MODE":          "edit-mode"
+}

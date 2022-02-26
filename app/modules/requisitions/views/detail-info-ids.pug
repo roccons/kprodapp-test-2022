@@ -1,0 +1,65 @@
+if resource_translated_id
+  | Clave de producción: #[span#production_key_str= production_key || '']
+  br
+  | Clave de localización: #[span#location_key_str= location_key || '']
+  br
+
+| ID de recurso:
+
+if resource_id
+  |  #[a.link(href=authoring_url target="_blank" title="Ver en autoría")= resource_id]
+else
+  |  -
+
+|  / ID original:
+
+if resource_original_id
+  |  #[span= resource_original_id]
+else
+  |  -
+
+|  / ID traducido:
+
+if resource_translated_id
+  |  #[span= resource_translated_id]
+else
+  |  -
+
+br
+| ID de orden:
+
+if order_id
+  |  #[a(href='/#orden/' + order_id title="Ver orden de producción")= order_id]
+  | (#[a(href=board_url target="_blank" title="Ver tarjeta de la orden de producción") tarjeta])
+else
+  |  -
+
+|  / ID de referencia:
+
+if reference_resource_id
+  - var link = krb_resource_type === 'AST' ? 'asset' : 'recurso'
+  - link = App.config.KRB_URL_BASE + '/' + link + '/' + reference_resource_id
+  |  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= reference_resource_id]
+else
+  |  -
+
+|  / ID resource bank:
+
+if krb_resource_id
+  - var link = krb_resource_type === 'AST' ? 'asset' : 'recurso'
+  - link = App.config.KRB_URL_BASE + '/' + link + '/' + krb_resource_id
+  |  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= krb_resource_id]
+else
+  |  -
+
+br
+| Clasificación: #{classification || 'Curricular'}
+
+if repeated_resources && repeated_resources.length
+  br
+  | Recursos repetidos: #{repeated_resources.join(', ')}
+
+if process_type
+  -var processTypeClasses = ['warning','danger','primary']
+  br
+  | Process Type: #[span(class=`label label-${processTypeClasses[process_type-1]}`)=processTypes[process_type]]

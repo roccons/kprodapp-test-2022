@@ -1,0 +1,58 @@
+
+.truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Fixes the min-height bug in IE10-11.
+// This class should be added to a container element wrapping the desired flex
+// container as described in Flexbug #3. See http://bit.ly/1gy8OJS for details.
+.ieMinHeightFix() {
+  display: flex;
+  flex-direction: column;
+}
+
+.-flexbox(@dir: row) {
+  display: -webkit-flex;      // till Chrome 49, Safari
+  display: flex;              // NEW, Spec - Opera 12.1, Firefox 20+
+  flex-direction: @dir;
+}
+
+.-flex(@grow: 1, @shrink: 1, @basis: 0%) {
+  -webkit-flex: @grow @shrink @basis;        // Chrome
+          flex: @grow @shrink @basis;        // NEW, Spec - Opera 12.1, Firefox 20+
+}
+
+.-flex-align(@value: flex-start) {
+  -webkit-align-items: @value;
+          align-items: @value;
+}
+
+.-flex-justify(@value: flex-start) {
+  -webkit-justify-content: @value;
+          justify-content: @value;
+}
+
+/**
+ * @param {string} @value : nowrap, wrap, wrap-reverse
+ */
+.-flex-wrap(@value: wrap) {
+  -webkit-flex-wrap: @value;
+          flex-wrap: @value;
+}
+
+// Vertical alignment of content
+// IE9+ compatible, does not works for SVG elements
+.center-content() {
+  -webkit-transform-style: preserve-3d;
+     -moz-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  & > * {
+    position: relative;
+    top: 50%;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  }
+}

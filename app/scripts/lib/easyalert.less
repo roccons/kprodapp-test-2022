@@ -1,0 +1,97 @@
+
+@-ea2-padding:      22px;
+
+.easyalert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,.3);
+  opacity: 1;
+  transition: opacity .3s;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
+
+  &.ea-hide {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  .dialog {
+    position: relative;
+    display: block;
+    width: 420px;
+    max-width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: width .5s linear, height .5s linear;
+
+    &:focus {
+      outline: none;
+    }
+
+    & > .content {
+      padding: (@-ea2-padding + 6px) @-ea2-padding 2px (@-ea2-padding + 2px);
+      margin: 0;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.2);
+      box-shadow: 0 2px 4px -1px rgba(0,0,0,.14), 0 4px 5px 0 rgba(0,0,0,.098), 0 1px 10px 0 rgba(0,0,0,.084);
+
+      & > * {
+        position: relative;
+        width: 100%;
+        margin-bottom: @-ea2-padding;
+      }
+
+      & > .footer {
+        margin-bottom: (@-ea2-padding - 3px);
+        text-align: right;
+      }
+    }
+
+    .msg {
+      max-height: 70vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      margin-bottom: 1.5em;
+      background-image: none;
+    }
+
+    ul {
+      margin-bottom: 22px;
+    }
+
+    nav {
+      button {
+        min-width: 7em;
+
+        & + button {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    &.extra {
+      width: 460px;
+    }
+  }
+
+  // iguala aprox la altura de un spinner de 20px a la altura del footer
+  .body .spinner-box {
+    min-height: 33px;
+    padding: 3px 8px 0 8px;
+  }
+}

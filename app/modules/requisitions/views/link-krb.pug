@@ -1,0 +1,20 @@
+#link-to-krb.modal.fade(role="dialog")
+  .modal-dialog.modal-center.modal-md
+    .modal-content
+      header.modal-header.compact-header
+        button.close.wb-close(type="button" data-dismiss="modal" tabindex="200" title="Cerrar")
+        h3.modal-title
+
+      form#order-title-form.form-material
+        input(type="hidden" name="requisition_id" value=requisition_id)
+
+        .modal-body
+          - var lnk = App.config.KRB_URL_BASE + '/' + krbResType + '/' + krbId
+          .form-group
+            div Asegúrate de borrar las asociaciones hechas a este recurso
+            br
+            a(href=lnk target="_blank") Ver recurso en Resource Bank 
+              span.fa-external-link
+
+        .modal-footer
+          button.btn.btn-primary.btn-ok(type="button" data-dismiss="modal") Continuar

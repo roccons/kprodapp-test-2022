@@ -1,0 +1,18 @@
+
+- var readedHidden = App.config.ls('notif:readed-hidden') ? 'readed-hidden' : false
+
+ul#notifications-list.dropdown-menu.dropdown-menu-media.animation-scale-up(class=readedHidden role="menu")
+  li.dropdown-menu-header.disabled(role="presentation")
+    h5 Notificaciones
+      small#notifications-str (0)
+
+    #notifications-menu
+      button.action.-hide-readed.btn.btn-sm.btn-default(type="button") Ver no leído
+      span.action.-mark-readed.wb-eye(title="Marcar todo como leído")
+
+  li.list-group.is-scrollable(role="presentation")
+    div(data-role="container")
+
+      #notifications-body(data-role="content")
+        each item in list
+          include notification.pug

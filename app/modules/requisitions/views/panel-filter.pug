@@ -1,0 +1,34 @@
+extends /helpers/panel-filter.pug
+
+block extra-fields
+
+  .form-group.input-daterange
+    label.control-label.expander Fecha de creación
+    .expandible
+      input.form-control(name="from_date"
+        value= dateFormat(data.from_date)
+        pattern="^(?:[1-2][0-9]|3[01]|0?[1-9])[./-][efmajsond][a-z]{2}[./-](?:2[0-9])?\\d{2}$"
+        placeholder="Desde"
+        readonly
+        )
+      input.form-control(name="to_date"
+        value= dateFormat(data.to_date)
+        pattern="^(?:[1-2][0-9]|3[01]|0?[1-9])[./-][efmajsond][a-z]{2}[./-](?:2[0-9])?\\d{2}$"
+        placeholder="Hasta"
+        readonly
+        )
+
+  .form-group
+    label.control-label.expander Guión
+    .expandible.checkbox-custom.checkbox-default
+      input#script_storyboard_0(type="checkbox" name="script_storyboard"
+        value="0" checked=data.script_storyboard.includes('0'))
+      label(for="script_storyboard_0") N/A
+      br
+      input#script_storyboard_1(type="checkbox" name="script_storyboard"
+        value="1" checked=data.script_storyboard.includes('1'))
+      label(for="script_storyboard_1") Guión pendiente
+      br
+      input#script_storyboard_2(type="checkbox" name="script_storyboard"
+        value="2" checked=data.script_storyboard.includes('2'))
+      label(for="script_storyboard_2") Guión completado

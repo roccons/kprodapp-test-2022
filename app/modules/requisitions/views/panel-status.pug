@@ -1,0 +1,22 @@
+#progress-action-dialog.modal.fade(tabindex="-1" role="dialog")
+  .modal-dialog.modal-center.modal-sm
+    .modal-content
+      .modal-header.compact-header
+        button.close.wb-close(type="button" data-dismiss="modal" tabindex="200" title="Cerrar")
+        h3.modal-title Cambio de estatus
+
+      .modal-body.form-material
+
+        .form-group
+          label.control-label(for="panel-status-select") Selecciona el status
+          select#panel-status-select.form-control(tabindex="201")
+            option(value="" selected)
+            each item in App.catalogs.get('req_statuses')
+              option(value=item.id)= item.name
+
+      .modal-footer
+        button.btn.btn-primary.submit-form(
+          type="button"
+          tabindex="202"
+          disabled
+          ) Aceptar

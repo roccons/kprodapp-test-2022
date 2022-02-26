@@ -1,0 +1,174 @@
+//
+// Component: Animation
+// ========================================================================
+
+[class*=animation-] {
+  -webkit-animation-duration: .5s;
+          animation-duration: .5s;
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
+
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+.animation-fade {
+  -webkit-animation-name: fade;
+          animation-name: fade;
+  -webkit-animation-duration: .8s;
+          animation-duration: .8s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+.animation-scale {
+  -webkit-animation-name: scale-12;
+          animation-name: scale-12;
+}
+
+.animation-scale-up {
+  -webkit-animation-name: fade-scale-02;
+          animation-name: fade-scale-02;
+}
+
+.animation-scale-down {
+  -webkit-animation-name: fade-scale-18;
+          animation-name: fade-scale-18;
+}
+
+// Keyframes Modifier
+// ========================================================================
+
+// Modifier: `animation-fade`
+// -------------------------
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0
+  }
+  100% {
+    opacity: 1
+  }
+}
+
+// Modifier: `animation-scale`
+// -------------------------
+
+@-webkit-keyframes scale-12 {
+  0% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes scale-12 {
+  0% {
+    transform: scale(1.2)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+
+// Modifier: `animation-scale-up`
+// -------------------------
+
+@-webkit-keyframes fade-scale-02 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0.2);
+            transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes fade-scale-02 {
+  0% {
+    opacity: 0;
+    transform: scale(0.2)
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+// Modifier: `animation-slide-top`
+// -------------------------
+
+.animation-slide-top {
+  -webkit-animation-name: slide-top;
+          animation-name: slide-top;
+}
+
+// Modifier: `animation-scale-down`
+// -------------------------
+
+@-webkit-keyframes fade-scale-18 {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1.8);
+            transform: scale(1.8);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes fade-scale-18 {
+  0% {
+    opacity: 0;
+    transform: scale(1.8)
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+// Modifier: `animation-slide-top`
+// -------------------------
+
+@-webkit-keyframes slide-top {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slide-top {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}

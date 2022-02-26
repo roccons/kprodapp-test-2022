@@ -1,0 +1,84 @@
+// bootstrap-table container
+#table-root {
+  position: relative;
+  width: 100%;
+}
+
+.bootstrap-table {
+
+  // min width to the "Columnas" popup
+  .keep-open {
+    .dropdown-menu {
+      min-width: 240px;
+    }
+  }
+
+  .fixed-table-container {
+    padding-top: 6px;
+
+    table {
+      width: auto;
+      min-width: 100%;
+      max-width: none;
+    }
+  }
+
+  td {
+    cursor: pointer;
+  }
+
+  td.visor-exclude {
+    cursor: default;
+    .checkbox-custom {
+      cursor: pointer;
+    }
+  }
+
+  th.bs-checkbox,
+  td.bs-checkbox {
+    width: 38px !important;
+
+    // Fix to custom checkbox alignment in headers of bootstrap-table
+    .checkbox-custom {
+      width: 26px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  // Fix to position inside table for click detection
+  .radio-custom input[type="radio"],
+  .checkbox-custom input[type="checkbox"] {
+    margin-left: -20px !important;
+    cursor: pointer;
+  }
+
+  .fixed-table-body .card-view {
+    margin-left: 40px;
+    .title {
+      min-width: 200px;
+    }
+    &.visor-exclude {
+      float: left;
+      margin-left: 5px;
+      width: auto;
+      .checkbox-custom {
+        margin-top: 4px !important;
+      }
+    }
+  }
+
+  tr {
+    border-left: 1px solid transparent;
+    &.view-active {
+      border-left-color: @brand-primary;
+    }
+  }
+
+  // solo iconos, sin centrar pero con cierta separación de la columna anterior
+  td.icon-only {
+    span {
+      margin-left: 4px !important;
+    }
+  }
+}

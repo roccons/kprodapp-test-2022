@@ -1,0 +1,53 @@
+#user-prefs.modal.fade(role='dialog')
+  .modal-dialog.modal-center
+    .modal-content
+      header.modal-header.compact-header
+        h3.modal-title Preferencias
+      form#user-prefs-form.form-material
+        .modal-body.padding-bottom-0
+
+          .row.form-group
+            .col-sm-12.radio-custom.radio-default
+              input#user-prefs-menu1(type='radio' name='user_prefs_menu'
+                tabindex='501', checked=!menuInit value='')
+              label(for='user-prefs-menu1') Estado del menú de acuerdo al ancho de la pantalla
+            .col-sm-12.radio-custom.radio-default
+              input#user-prefs-menu2(type='radio' name='user_prefs_menu'
+                tabindex='502' checked=(menuInit === 'unfold') value='unfold')
+              label(for='user-prefs-menu2') Iniciar con el menú expandido
+            .col-sm-12.radio-custom.radio-default
+              input#user-prefs-menu3(type='radio' name='user_prefs_menu'
+                tabindex='503', checked=(menuInit === 'fold') value='fold')
+              label(for='user-prefs-menu3') Iniciar con el menú contraído
+
+          .row.form-group
+            .col-sm-12
+              button#user-prefs-tables.btn.btn-link(type='button', tabindex='504')
+                | Limpiar las preferencias de las tablas
+
+          if prefEnv !== 'PROD'
+            .row.form-group.padding-top-15
+              h5 Usar un entorno de servidor específico (requiere recargar la página):
+
+            .row.form-group
+              .col-sm-12.radio-custom.radio-default
+                input#user-prefs-env1(type='radio' name='user_prefs_env' tabindex='505'
+                  value='DEV' checked=(prefEnv === 'DEV'))
+                label(for='user-prefs-env1') Dev
+
+              .col-sm-12.radio-custom.radio-default
+                input#user-prefs-env2(type='radio' name='user_prefs_env' tabindex='506'
+                  value='STG' checked=(prefEnv === 'STG'))
+                label(for='user-prefs-env2') Staging
+
+              .col-sm-12.radio-custom.radio-default
+                input#user-prefs-env3(type='radio' name='user_prefs_env' tabindex='507'
+                  value='CUSTOM' checked=(prefEnv === 'CUSTOM'))
+                label(for='user-prefs-env3') Personalizado (base Dev):
+
+                input.form-control(type='url' name='user_prefs_url' disabled=(prefEnv !== 'CUSTOM')
+                  value=prefURL placeholder='http://127.0.0.1:8000/kprod' style='margin-left:10px' required, tabindex='508')
+
+        .modal-footer
+          button.btn.btn-default.button-form(
+            type='submit' tabindex='509' data-dismiss='modal') Cerrar

@@ -1,0 +1,20 @@
+{
+  "disallowAttributeInterpolation": true,
+  "disallowAttributeTemplateString": "all",
+  "disallowClassAttributeWithStaticValue": true,
+  "disallowClassLiteralsBeforeIdLiterals": true,
+  "disallowDuplicateAttributes": true,
+  "disallowIdAttributeWithStaticValue": true,
+  "disallowLegacyMixinCall": true,
+  "disallowTemplateString": true,
+  "requireClassLiteralsBeforeAttributes": true,
+  "requireLineFeedAtFileEnd": true,
+  "requireLowerCaseAttributes": true,
+  "requireLowerCaseTags": true,
+  "requireSpaceAfterCodeOperator": ["-"],
+  "requireSpecificAttributes": [{ "button": ["type"] }],
+  "validateDivTags": true,
+  "validateExtensions": true,
+  "validateIndentation": 2,
+  "validateLineBreaks": "LF"
+}

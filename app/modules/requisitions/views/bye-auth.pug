@@ -1,0 +1,52 @@
+- var iconStyle = 'font-size:40px'
+
+.bye-auth.text-center(style='height:400px;height:99vh')
+
+  .center-block.text-center(style="padding:200px 20px 20px; padding-top:38vh")
+
+    if __errors
+      span.fa-ban.text-danger(style=iconStyle)
+      br
+      p La operación se ha interrumpido debido a un error.
+      if __duplicated
+        p Sin embargo, se ha crado una copia de la requisición
+          |  #{resource_title || ''}
+          |  ya existente para este mismo recurso.
+
+    //- 3 = guardado con éxito
+    else if __duplicated === 3
+      span.wb-check-circle.text-success(style=iconStyle)
+      br
+      p: big Requisición actualizada
+
+    //- 2 = revisado sin guardar
+    else if __duplicated === 2
+      span.wb-info-circle.text-primary(style=iconStyle)
+      br
+      p: big Gracias
+
+    else if __duplicated
+      - var _title = `"${resource_title}"`
+      span.wb-check-circle.text-success(style=iconStyle)
+      br
+      p: big Coincidencia encontrada
+      p Se ha creado con éxito una copia de la requisición
+        |  #{_title} ya existente para este mismo recurso.
+
+    else if __noUser
+      span.fa-ban.text-danger(style=iconStyle)
+      br
+      p: big Usuario no autenticado
+      p Por favor inicia sesión con los datos del usuario correcto.
+
+    else if id
+      span.wb-check-circle.text-success(style=iconStyle)
+      br
+      p: big La requisición ha sido creada exitosamente.
+
+    else
+      span.wb-alert-circle.text-warning(style=iconStyle)
+      br
+      p: big La creación se ha cancelado.
+
+    p Ya puedes cerrar esta pestaña.

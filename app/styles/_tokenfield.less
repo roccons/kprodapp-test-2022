@@ -1,0 +1,103 @@
+
+table .token a {
+  text-decoration: none;
+}
+
+.partial-token {
+  opacity: 0.6;
+}
+
+.tokenfield.form-control {
+  padding-top: 7px;
+  .token {
+    height: 24px;
+    line-height: 22px;
+    margin-top: -1px;
+    margin-bottom: 6px;
+  }
+  .token-input {
+    height: 22px;
+    line-height: 22px;
+    margin-bottom: 6px;
+  }
+
+  .token-input::-webkit-input-placeholder {
+    color: @remark-border
+  }
+  .token-input::-moz-placeholder {
+    color: @remark-border
+  }
+  .token-input:-ms-input-placeholder {
+    color: @remark-border
+  }
+  .token-input:disabled::-webkit-input-placeholder {
+    color: @gray-light
+  }
+  .token-input:disabled::-moz-placeholder {
+    color: @gray-light
+  }
+  .token-input:disabled:-ms-input-placeholder {
+    color: @gray-light
+  }
+}
+
+.tokenfield.readonly {
+  background: 0 0;
+  background: rgba(0,0,0,0);
+
+  .close {
+    pointer-events: none;
+  }
+}
+
+.tokenfield.disabled {
+  background: 0 0;
+  background: rgba(0,0,0,0);
+  border-bottom: 1px dashed @gray-light;
+}
+
+.form-control.tt-hint {
+  background: none !important;
+}
+
+.tt-menu {
+  margin-top: 5px;
+  padding: 5px 0;
+  -webkit-box-shadow: 0 3px 12px rgba(0,0,0,.05);
+          box-shadow: 0 3px 12px rgba(0,0,0,.05);
+  transition: .25s;
+  z-index: 1200 !important;
+  min-width: 200px;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: 3px;
+  border: 1px solid @material-border;
+}
+
+.tt-suggestion {
+  display: block;
+  padding: 0 5px;
+
+  & > a {
+    display: block;
+    padding: 8px 15px;
+    clear: both;
+    white-space: nowrap;
+    color: @remark-fore-color;
+    text-decoration: none;
+    transition: background-color .25s;
+  }
+
+  &.tt-cursor a,
+  & > a:hover {
+    color: @remark-fore-color !important;
+    background-color: @material-hover !important;
+  }
+}
+
+.tt-dataset > .tt-header {
+  padding: 4px 0 4px 8px;
+  font-weight: 400;
+  font-style: italic;
+  border-bottom: 1px dotted @material-border;
+}

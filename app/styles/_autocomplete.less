@@ -1,0 +1,29 @@
+// jquery-ui-autocomplete
+
+.ui-autocomplete {
+  position: absolute;
+  z-index: 10000;
+  cursor: default;
+  max-height: 20em;
+  padding: 0;
+  margin-top: 5px;
+  overflow-x: hidden;
+  overflow-x: auto;
+  list-style: none;
+  background-color: white;
+  border: 1px solid @input-border;
+  -webkit-border-radius: 0;
+          border-radius: 0;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.ui-autocomplete > li {
+  padding: 3px 20px;
+}
+.ui-autocomplete > li.ui-state-focus {
+  color: white;
+  background-color: @brand-primary;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+}

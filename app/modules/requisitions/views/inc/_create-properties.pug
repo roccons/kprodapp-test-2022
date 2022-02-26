@@ -1,0 +1,78 @@
+mixin createProperties(_state, _props, _setidx, _prefix)
+  - var minicat = App.catalogs.get('form_field_options').requisitions
+  - var _tabidx = _state.tabidx
+  - if (!_prefix) _prefix = 'ap_'
+
+  - var rows = [];
+  // se divide el array en arryas de dos para mostrarlos por columnas (rows)
+  - for (var i = 0, j = _props.length; i < j; i+=2) { rows.push(_props.slice(i, i + 2)) }
+
+  each row in rows
+    .row.specification
+      each ep in row
+        -
+          var fname = _prefix + ep.name
+          var finfo = minicat[ep.name] || []
+          var value = ep.value || ''
+          _tabidx++
+          
+          if (fname === 'f_production_id') {
+            finfo = finfo.filter(f => f.name !== 'Outsourcing - Mandaraka')
+          }
+
+        +createField(ep, fname, finfo, _tabidx, value)
+
+  - if (_setidx) _state.tabidx = _tabidx
+
+
+mixin createField (ep, fname, finfo, _tabidx, value)
+  
+  - var classForRadios = ep.input_type === 'checkbox' ? 'space-between' : ''
+
+  - if (ep.name != 'process_type')
+    .col-md-6
+      .form-group(class=classForRadios)
+        label.control-label(for=fname class=ep.required ? 'required' : false id="label-" + ep.name)= ep.translation
+        div
+
+          case ep.input_type
+            when 'checkbox'
+              .checkbox-custom.checkbox-default
+                - value = !!~~value
+                input(type='checkbox' id=fname name=fname value='1' checked=value tabindex=_tabidx)
+                label
+
+            when 'radio'
+              - if (!finfo.length) finfo = [{ name: ep.translation, value: ep.name }]
+              .radio-custom.radio-primary.horizontal
+                each item, _i in finfo
+                  input(type='radio' id= fname + _i,
+                        name=fname value=item.value checked=(value == item.value) tabindex=_tabidx)
+                  label(for=fname + _i)= item.name
+
+            when 'url'
+              input.form-control(name=fname id=fname type='url' value=value required=ep.required tabindex=_tabidx)
+
+            when 'text'
+              input.form-control(name=fname id=fname value=value required=ep.required tabindex=_tabidx)
+
+            when 'Tokenfield'
+              input.form-control.has-tokens(name=fname id=fname value=value required=ep.required tabindex=_tabidx)
+
+            when 'select'
+              select.form-control(name=fname id=fname required=ep.required tabindex=_tabidx)
+                option
+                each item in finfo
+                  option(value=item.value selected=(item.value == value))= item.name
+
+            when 'select multiple'
+              - value = value.split(/,\s?/)
+              select.form-control(name=fname id=fname required=ep.required tabindex=_tabidx
+                  multiple data-max-display-count="99")
+                option
+                each item in finfo
+                  option(value=item.value selected=value.includes(item.value))= item.name
+
+            default
+              textarea.form-control(name=fname id=fname required=ep.required tabindex=_tabidx rows="3")
+                = value.replace(/<br>/g, '\n')

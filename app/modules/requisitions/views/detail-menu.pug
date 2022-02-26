@@ -1,0 +1,74 @@
+//-
+  Ahora los links de "crear orden de producción" y "asociar a orden de producción"
+  deben mostrarse habilitados cuando el estatus es AA (si se cumple también la otra
+  condición de que requisitions.order_id sea nulo).
+  En todos los demás estatus los links mencionados permanecen deshabilitados.
+
+  Con estatus CC ya no es editable la requisición.
+
+- var DISABLED = 'disabled'
+- var ENABLED  = false
+-
+  var canGenerate = status === 'AA' && !needs_review
+  // Las requisiciones tipo 'link' no generan orden de producción
+  // (Origen = link(URL) && resource_type = Link)
+  // se publican directamente a resource bank 
+  var resourceType = resource_type.type || resource_type
+  var canPublish = canGenerate && file_origin === 'URL'
+  var resourceAssociateCap = user_capabilities['resource-associate']
+  var classPublish = canPublish ? ENABLED : DISABLED
+  var classAssign = canGenerate && !canPublish && resourceType !== 'Link' ? ENABLED : DISABLED
+  var classSetKRB = canGenerate && resourceAssociateCap && !krb_resource_id ? ENABLED : DISABLED
+  var classUnsetKRB = resourceAssociateCap && krb_resource_id ? ENABLED : DISABLED
+  var classDelete = order_id ? DISABLED : ENABLED
+  var classInfo = authoring_url ? ENABLED : DISABLED
+
+.dropdown.pull-right
+
+  span.btn.dropdown-toggle.-action-dropdown(data-toggle='dropdown')
+    i.wb-more-vertical
+
+  ul.dropdown-menu
+
+    li.-action-publish(class=classPublish data-action-require="resource-associate")
+      a.link Publicar en R. Bank
+
+    li.-action-generate(class=classAssign data-action-require="order-generate")
+      a.link Generar orden de producción
+
+    li.-action-assoc(class=classAssign data-action-require="order-associate")
+      a.link Agregar a orden existente
+
+    li.-action-assign(class=classSetKRB data-action-require="resource-associate")
+      a.link Vincular recurso de R. Bank
+
+    li.-action-deassign(class=classUnsetKRB data-action-require="resource-associate")
+      a.link Desvincular recurso de R. Bank
+
+    li.divider.hidden(role="separator")
+
+    li.-action-delete.hidden(class=classDelete data-action-require="delete")
+      a.link Eliminar requisición
+
+    li.divider(role="separator")
+
+    if resource_translated_id
+      li.-action-context.-keep-viewer
+        a.link Consultar contexto del recurso
+
+    li.-action-info(class=classInfo)
+      a.link(href=authoring_url target="_blank") Ver en autoría
+
+if !needs_review
+  if _partials
+    if status !== 'CC'
+      button#detail-cancel-form.btn.-action-cancel.bold(
+          type="button" title="Cancelar") CANCELAR
+      button#detail-submit-form.btn.wb-pencil.btn-text-icon.btn-text-icon-edit.-action-edit(
+          type="button" title="Guardar") 
+            span EDITAR
+
+  else if user_capabilities.edit || user_capabilities['change-ask']
+    button.btn.wb-pencil.btn-text-icon.btn-text-icon-edit.-action-edit(type="button"
+      title="Habilitar edición" disabled=(status === 'CC') tabindex="2") 
+        span EDITAR

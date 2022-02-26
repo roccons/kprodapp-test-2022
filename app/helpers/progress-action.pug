@@ -1,0 +1,21 @@
+#progress-action-dialog.modal.fade(tabindex="-1" role="dialog")
+  .modal-dialog.modal-center.modal-sm
+    .modal-content
+      .modal-header.compact-header
+        if _title
+          h3.modal-title= _title
+
+      .modal-body.form-material
+
+        p.modal-message!= _message
+
+      .modal-footer
+        .progress.progress-sm
+          .progress-bar.progress-bar-success.progress-bar-indicating.active(role="progressbar")
+
+        .hidden-box(style="display:none")
+          button.btn.btn-default.submit-form(
+            type="button"
+            data-dismiss="modal"
+            tabindex="201"
+            ) Cerrar

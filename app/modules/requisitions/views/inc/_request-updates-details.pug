@@ -1,0 +1,42 @@
+- var sanitize = require('scripts/sanitize')
+-
+  function getCatForType(id) {
+    return App.catalogs.get('resource_types')
+           .filter(function (c) { return c.resource_type_group_id == id })
+  }
+  function getCatForVersion(id) {
+    return App.catalogs.get('resource_versions')
+           .filter(function (c) { return c.resource_type_id == id })
+  }
+
+include _create-properties.pug
+
+section.generals
+
+  .middle-line
+    h4 Características generales del recurso
+    div
+  .row
+    .col-sm-4
+      .form-group
+        label.control-label Category *
+        select.form-control(name="resource_type_group_id" required tabindex=_state.tabidx++)
+          option(selected=!resource_type_group_id)
+          each item in App.catalogs.get('resource_type_groups')
+            option(value=item.id selected=(resource_type_group_id === item.id))= item.name
+    .col-sm-4
+      .form-group
+        label.control-label Type *
+        select.form-control(name="resource_type_id" required tabindex=_state.tabidx++)
+          if resource_type_id
+            option
+            each item in getCatForType(~~resource_type_group_id)
+              option(value=item.id selected=(resource_type_id === item.id))= item.name
+    .col-sm-4
+      .form-group
+        label.control-label Version *
+        select.form-control(name="resource_version_id" required tabindex=_state.tabidx++)
+          if resource_version_id
+            option
+            each item in getCatForVersion(~~resource_type_id)
+              option(value=item.id selected=(resource_version_id === item.id))= item.name

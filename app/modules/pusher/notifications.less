@@ -1,0 +1,167 @@
+@import "app/styles/icons/_wb-variables.less";
+@import "app/styles/_knotion-colors.less";
+
+#user-notifications {
+  position: relative;
+
+  & > [data-toggle="dropdown"] {
+    width: 50px;
+    padding-bottom: 20px;
+    padding-left: auto;
+    padding-right: auto;
+    text-align: center;
+
+    .icon {
+      display: inline-block;
+      padding-top: 2px;
+      font-size: 18px;
+    }
+  }
+}
+
+
+#notifications-count {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+}
+
+
+#notifications-list {
+  right: 2px;
+  left: auto;
+
+  .dropdown-menu-header {
+    position: relative;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    h5 {
+      display: inline-block;
+    }
+  }
+
+  &.dropdown-menu-media {
+    width: 390px;
+    .list-group {
+      max-height: 500px;
+      font-size: 14px;
+    }
+  }
+
+  .is-scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &.readed-hidden {
+    .list-group-item:not(.unread) {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 419px) {
+  #notifications-list {
+    right: 0;
+    left: 0;
+    float: none;
+  }
+}
+
+
+#notifications-str {
+  margin-left: 6px;
+}
+
+
+#notifications-menu {
+  float: right;
+  color: @remark-border;
+  vertical-align: text-bottom;
+  margin-right: -8px;
+
+  & > .action {
+    display: inline-block;
+    margin-left: 8px !important;
+    cursor: pointer;
+  }
+
+  & > button {
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+}
+
+
+#notifications-body > .list-group-item {
+  margin: 0 10px;
+  padding: 10px 8px 8px 10px;
+  border-bottom: 1px solid @material-border;
+
+  transition: background-color 0.3s;
+
+  &:first-child {
+    margin-top: 8px;
+  }
+
+  &:last-child {
+    margin-bottom: 8px;
+    border-bottom: none;
+  }
+
+  &.unread {
+    p {
+      font-weight: 400;
+    }
+    .-delete {
+      display: none;
+    }
+  }
+
+  &:not(.unread) {
+    & > * {
+      opacity: 0.6;
+    }
+    .-toggle {
+      display: none;
+    }
+  }
+
+  .list-item > p {
+    line-height: 20px;
+  }
+
+  .list-item-footer {
+    font-size: 12px;
+  }
+
+  .actions {
+    display: block;
+    float: right;
+    margin-right: -2px;
+    font-size: 12px;
+    color: @remark-border;
+    opacity: 0.0;
+    transition: opacity 300ms;
+  }
+
+  &:hover .actions {
+    opacity: 1;
+  }
+
+  .action {
+    display: inline-block;
+    padding: 4px 8px;
+    margin-top: -4px;
+    vertical-align: text-bottom;
+  }
+
+  .-toggle:hover {
+    color: @brand-primary;
+  }
+
+  .-delete:hover {
+    color: @brand-danger;
+  }
+}

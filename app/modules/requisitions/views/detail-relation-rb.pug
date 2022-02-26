@@ -1,0 +1,49 @@
+- var DISABLED = 'disabled'
+- var ENABLED  = false
+-
+  var canGenerate = (status === 'AA' && !needs_review) || fromCreateRequisition
+  var resourceAssociateCap = user_capabilities['resource-associate']
+  var classSetKRB = canGenerate && resourceAssociateCap && !krb_resource_id ? ENABLED : DISABLED
+  var classUnsetKRB = resourceAssociateCap && krb_resource_id ? ENABLED : DISABLED
+  var referenceTitle = reference_resource_title && reference_resource_title.length > 23
+                    ? reference_resource_title.substr(0, 23) + '...' : reference_resource_title
+  var krbTitle = krb_resource_title && krb_resource_title.length > 23
+             ? krb_resource_title.substr(0, 23) + '...' : krb_resource_title
+  var canChangeResource = (user_capabilities['resource_associate'] && reference_resource_title)
+  var classChangeResource = canChangeResource ? ENABLED : DISABLED;
+
+.col-md-12
+  h4 Relación con Resource Bank
+.col-md-6.rb-relation-item
+  strong.rb-relations-title Recurso de referencia
+  .rb-relation(class=canGenerate?'':DISABLED class=reference_resource_id?'':'empty -action-changeres')
+    strong.space-between
+    if reference_resource_id
+      -
+        var link = reference_resource_type === 'AST' ? 'asset' :
+          reference_file_origin === 'KNRA' ? 'realidad-aumentada' : 'recurso'
+        link = App.config.KRB_URL_BASE + '/' + link + '/' + reference_resource_id
+      strong.space-between
+        |  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= reference_resource_id]
+        a.wb-close-mini.rb-relation-action.-action-deassingres(data-action-require="resource-associate" class=canGenerate?'':DISABLED class=fromCreateRequisition ? '' : '-action-changeres')
+      p.nowrap(title=reference_resource_title)= referenceTitle || ''
+      span= reference_resource_type || ''
+    else
+      .center-flex VINCULAR RECURSO
+
+.col-md-6.rb-relation-item
+  strong.rb-relations-title ID de Resource Bank
+  .rb-relation.-action-assign.rb-relation-action(class=classSetKRB class=krb_resource_id?'':'empty' data-action-require="resource-associate")
+    if krb_resource_id
+      strong.space-between
+        -
+          var link = krb_resource_type === 'AST' ? 'asset' :
+            krb_resource_file_origin === 'KNRA' ? 'realidad-aumentada' : 'recurso'
+
+        - link = App.config.KRB_URL_BASE + '/' + link + '/' + krb_resource_id
+        |  #[a.link(href=link target="_blank" title="Ver recurso en KRB")= krb_resource_id]
+        a.wb-close-mini.-action-deassign.rb-relation-action(class=classUnsetKRB data-action-require="resource-associate")
+      p.nowrap(title=krb_resource_title)=  krbTitle || ''
+      span= krb_resource_type || ''
+    else
+      .center-flex VINCULAR RECURSO
