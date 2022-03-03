@@ -11,7 +11,7 @@ Esta aplicación se conecta con la API de Workflow en el entorno de desarrollo y
 
 Se deberá agregar una nueva pestaña en la vista de requisición individual, esta pestaña deberá mostrar una tabla con las órdenes de producción relacionadas con dicha requisición.
 
-Para esto se deberá utilizar la función `tableInit` del script `app/scripts/table-init.js` que acepta diversos parámetros, entre ellos las columnas a mostrar, la url a consultar y los query params. La url del endpoint para obtener las ordenes relacionadas es `{{url}}/related-orders` y se deben pasar por query params los siquientes valores:
+Para esto se deberá utilizar la función `tableInit` del script `app/scripts/table-init.js` que acepta diversos parámetros, entre ellos las columnas a mostrar, la url a consultar y los query params. Como referencia se puede consultar cómo está construida la vista del listado de requisiciones (panel). También es importante mencionar que ya existe en el repositorio un script que muestra un modal con la tabla de las órdenes relacionadas y que es utilizado en otras partes de la aplicación, por ejemplo es el que muestra el modal que se abre al dar click en la cadenita azul en el panel derecho del visor de requisición. Se valora mucho si se reutiliza el código que lista la tabla para evitar crear código duplicado. La url del endpoint para obtener las ordenes relacionadas es `{{url}}/related-orders` y se deben pasar por query params los siquientes valores:
 
 ```json
 {
@@ -35,8 +35,6 @@ Las columnas a mostrar son las siguientes:
 
 Para agregar la nueva pestaña hay que insertar un nuevo item (con los mismos atributos que los ya existentes) en el elemento `#detail-nav-tabs` (la aplicación cuenta con un plugin de tabs que realizará la lógica correspondiente para ir cambiando de pestaña). También hay que crear un elemento con el id referenciado en el item de la pestaña que mostrará la tabla y agregar la clase `.with-related-orders` al elemento `#detail-nav-tabs` para que se muestren correctamente las pestañas.
 
-Como pista para realizar la prueba técnica con mayor facilidad, existe un script que muestra un modal con la tabla de las órdenes relacionadas. Se valora mucho si reutiliza el código que lista la tabla para evitare crear código duplicado.
-
 _Screenshot de referencia_
 ![Test screenshot](test-screenshot.png)
 
@@ -50,6 +48,7 @@ _Screenshot de referencia_
     * `brunch watch --server` — watches the project with continuous rebuild. This will also launch HTTP server with [pushState](https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM/Manipulating_the_browser_history).
     * El código base de esta prueba lanza un error de página no encontrada al abrir la app, solo hay que ignorarlo y dar click en el módulo de requisiciones.
     * `public/` dir is fully auto-generated and served by HTTP server.  Write your code in `app/` dir.
+    * Para realizar pruebas utilizar el usuario 'rodrigo_a' y la contraseña '1234'
 
 ---
 
