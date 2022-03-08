@@ -41,7 +41,7 @@ _Screenshot de referencia_
 ### ¿Cómo correr esta app?
 
 * Install (if you don't have them):
-    * [Node.js 10.x or newer](http://nodejs.org): `brew install node` on OS X
+    * [Node.js 10.x or 12.x](http://nodejs.org): `brew install node` on OS X
     * [Brunch](http://brunch.io): `npm install -g brunch`
     * Brunch plugins and app dependencies: `npm install`
 * Run:
