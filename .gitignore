@@ -31,7 +31,6 @@ _site
 *.sublime-project
 *.sublime-workspace
 nbproject
-Icon?
 Thumbs.db
 ehthumbs.db
 Desktop.ini
