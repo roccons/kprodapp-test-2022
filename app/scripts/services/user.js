@@ -64,15 +64,15 @@ function _login(usr) {
   const STRING = 'string'
 
   if (usr &&
-      typeof usr.auth_key  === STRING &&
-      typeof usr.token     === STRING &&
+      typeof usr.token_type     === STRING &&
+      typeof usr.access_token   === STRING &&
       typeof usr.userName  === STRING &&
       typeof usr.idUser    === STRING &&
       typeof usr.idCountry === STRING) {
 
     usr = {
-      auth_key:     usr.auth_key,
-      token:        usr.token,
+      token_type:   usr.token_type,
+      access_token: usr.access_token,
       userName:     usr.userName,
       firstName:    usr.firstName || usr.userName,
       secondName:   usr.secondName,
@@ -86,7 +86,7 @@ function _login(usr) {
     }
 
     _user = {
-      authKey:      `${usr.auth_key}:${usr.token}`,
+      authKey:      `${usr.token_type} ${usr.access_token}`,
       userName:     usr.userName,
       fullName:     usr.firstName +
         (usr.secondName ? ` ${usr.secondName}` : '') +
@@ -120,11 +120,11 @@ function _login(usr) {
  */
 function login(form, doneFn, failFn) {
   const data = {
-    user: form.username.value.trim(),
+    userName: form.username.value.trim(),
     password: form.password.value.trim()
   }
   const opts = {
-    url: `${App.config.API_BASE}/userLogin`,
+    url: `${App.config.API_BASE}/auth/login`,
     method: 'POST',
     contentType: 'application/json; charset=UTF-8',
     dataType: 'json',

@@ -504,7 +504,7 @@ module.exports = function (el, ctx, promise) {
       const view = require('./views/detail.pug')
       const processTypes = App.catalogs.get('process_types')
       const urlFormatter = App.pusher.urlFormatter
-      const loadInfoResourceBank = require('./update-rb-relation')
+      // const loadInfoResourceBank = require('./update-rb-relation')
       const relatedOrdersModal = require('shared/related-orders-modal')
 
       ctx.processTypesText = {
@@ -553,7 +553,7 @@ module.exports = function (el, ctx, promise) {
       }
       ctx.processTypes = processTypes
 
-      loadInfoResourceBank(ctx, null, updateMenu)
+      // loadInfoResourceBank(ctx, null, updateMenu)
 
       $(el).html(view(ctx))
 

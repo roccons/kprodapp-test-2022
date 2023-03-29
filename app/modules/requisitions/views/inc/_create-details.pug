@@ -1,9 +1,7 @@
 - var catalogs = App.catalogs.get('form_field_options').requisitions
-- var process_types = []
-- process_types.push({ value: 0, name: 'none' })
-- process_types = process_types.concat(catalogs['process_type'])
-- var process_type_obj = process_types.find(pt => pt.value === process_type)
-- var process_type_value = process_type_obj ? process_type_obj.name : 'none'
+- var process_types = catalogs['process_type']
+- var process_type_obj = process_types.find(pt => pt.id === process_type)
+- var default_process_type = process_types.find(p => p.id === 4)
 - var sanitize = require('scripts/sanitize')
 -
   function getCatForType(id) {
@@ -24,7 +22,7 @@ section.generals
       .detail-pane-title
         select.form-control.select-process-type(name="f_process_type" id="f_process_type" tabidx=_state.tabidx++)
           each ptype in process_types
-            option(value=ptype.value selected=(ptype.value === process_type))= processTypesText[ptype.name]
+            option(value=ptype.id selected=(ptype.id === (process_type || default_process_type.id)))= ptype.name_es
     else
       .row.detail-pane-title
         .col-sm-12.detail-content-header

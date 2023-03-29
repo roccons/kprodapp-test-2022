@@ -14,7 +14,8 @@
   órdenes: TD (amarillo), IP (naranja), DD (verde), PP (negro)
 */
 
-const RE_NOSORT = /^(?:form_field_options|cicle|grades|task_.*|(card|order|req)_statuses|assignments|language)$/
+const RE_NOSORT =
+  /^(?:form_field_options|cicle|grades|task_.*|(card|order|req)_statuses|assignments|language)$/
 
 const HARDCODED_LANGUAGE = [
   { id: 'ES', name: 'Spanish', knotion_id: 1 },
@@ -29,7 +30,7 @@ const strIds = {
   task_delivery_statuses: true,
   evaluation_type: true,
   language: true,
-  users: true
+  users: true,
 }
 
 const _cat = {}
@@ -44,18 +45,17 @@ const _cat = {}
 function setHardcodedCats(cats) {
   cats.evaluation_type = [
     { id: 'S', name: 'Escalar' },
-    { id: 'B', name: 'Binario' }
+    { id: 'B', name: 'Binario' },
   ]
   cats.validations = [
     'Ninguna',
     'Validación Académica',
     'Validación de Arte',
     'Validación de QA',
-    'Validación Técnica'
+    'Validación Técnica',
   ]
   return cats
 }
-
 
 function _get(cat) {
   if (!_cat.hasOwnProperty(cat)) {
@@ -66,15 +66,15 @@ function _get(cat) {
 
 function _itemFromName(cat, name) {
   name = name.toLowerCase()
-  return cat.find((o) => o.name.toLowerCase() === name)
+  return cat.find(o => o.name.toLowerCase() === name)
 }
 
 function getNames(cat) {
-  return _get(cat).map((o) => o.name)
+  return _get(cat).map(o => o.name)
 }
 
 function getIds(cat) {
-  return _get(cat).map((o) => o.id)
+  return _get(cat).map(o => o.id)
 }
 
 function idFromName(cat, name) {
@@ -112,7 +112,7 @@ function elemFromId(cat, id) {
   }
   if (!strIds[cat]) id |= 0
 
-  return _get(cat).find((o) => o.id === id)
+  return _get(cat).find(o => o.id === id)
 }
 
 function userByUname(uname) {
@@ -120,7 +120,6 @@ function userByUname(uname) {
   uname = uname.toLowerCase()
   return _cat.users.find(u => u.uname === uname) || null
 }
-
 
 function reqStatusEditable(status) {
   const item = _cat.req_statuses.find(st => st.id === status)
@@ -162,8 +161,10 @@ function init() {
   const getValid = function (o) {
     const isArray = Array.isArray
 
-    o = o &&
-      isArray(o.card_statuses) && 'set_final_resource' in o.card_statuses[0] && // nuevo formato
+    o =
+      o &&
+      isArray(o.card_statuses) &&
+      'set_final_resource' in o.card_statuses[0] && // nuevo formato
       isArray(o.country) &&
       isArray(o.order_statuses) &&
       isArray(o.req_statuses) &&
@@ -171,8 +172,11 @@ function init() {
       isArray(o.resource_types) &&
       isArray(o.resource_versions) &&
       isArray(o.users) &&
-      o.cicle && typeof o.cicle == 'object' &&
-      o.form_field_options && o.form_field_options.requisitions && o
+      o.cicle &&
+      typeof o.cicle == 'object' &&
+      o.form_field_options &&
+      o.form_field_options.requisitions &&
+      o
 
     // Prepara acceso directo al ID de los status "DD" y "PP"
     if (o) {
@@ -182,9 +186,9 @@ function init() {
         PUBLISHED: (cs.find(c => c.status === $_ORDER_ST.PUBLISHED) || {}).id,
       }
       if (CS.READY && CS.PUBLISHED) {
-        App.CS = CS     // todo bien
+        App.CS = CS // todo bien
       } else {
-        o = null        // error, card_statuses no está actualizado
+        o = null // error, card_statuses no está actualizado
       }
     }
 
@@ -192,9 +196,12 @@ function init() {
   }
 
   function prepare(res) {
-
     const sortS = (a, b) => a.localeCompare(b)
-    const sortA = (a, b) => a.name.localeCompare(b.name)
+    const sortA = (a, b) => {
+      const key = a.hasOwnProperty('name') ? 'name' : a.hasOwnProperty('title') ? 'title' : null
+
+      return key ? a[key].localeCompare(b[key]) : 1
+    }
     const sortT = (a, b) => a.resource_type_group_id - b.resource_type_group_id
     const sortV = (a, b) => a.resource_type_name.localeCompare(b.resource_type_name)
 
@@ -216,8 +223,9 @@ function init() {
     })
 
     // Permite usar el nombre de campo correcto para 'requisition_type_str'
-    res.form_field_options.requisitions.requisition_type_str =
-    res.form_field_options.requisitions.requisition_type
+    res.form_field_options.requisitions.requisition_type_str = res.requisition_types.map(
+      r => ({ value: r.name, name: r.name })
+    )
 
     // Establece el flag 'editable' y los colores de status de requisiciones
     const reEdit = App.config.ED_REQ_STATUS
@@ -231,9 +239,15 @@ function init() {
       o.color = 'op-' + o.id
     })
 
-    res.grades = res.grades.sort((a, b) => a.id - b.id).map(o => (
-      { id: o.initials, name: o.name, name_es: o.name_es, country_id: o.country_id, key: `G${o.id}` }
-    ))
+    res.grades = res.grades
+      .sort((a, b) => a.id - b.id)
+      .map(o => ({
+        id: o.initials,
+        name: o.name,
+        name_es: o.name_es,
+        country_id: o.country_id,
+        key: `G${o.id}`,
+      }))
 
     res.users.forEach(u => {
       const names = []
@@ -242,7 +256,7 @@ function init() {
       if (u.firstSurname) names.push(u.firstSurname)
       u.id = u.idUser
       u.name = names.join(' ') || u.userName
-      u.uname = u.userName.toLowerCase()  // acelera las búsquedas
+      u.uname = u.userName.toLowerCase() // acelera las búsquedas
       if (u.picture.endsWith('/user_x_icn.png')) u.picture = null // ignora avatar genérico
     })
 
@@ -258,13 +272,15 @@ function init() {
       if (k === 'resource_types') {
         o.sort(sortT)
       } else if (k === 'resource_versions') {
-        o.sort(sortV)   // ordenación especial por el nombre del tipo
+        o.sort(sortV) // ordenación especial por el nombre del tipo
       }
       Object.freeze(o)
     })
 
     // Elimina las llaves existentes en `_cat` (pues es const)
-    Object.keys(_cat).forEach(k => { delete _cat[k] })
+    Object.keys(_cat).forEach(k => {
+      delete _cat[k]
+    })
 
     _cat.language = HARDCODED_LANGUAGE
 
@@ -300,9 +316,7 @@ function init() {
   // Se elimina la precarga de catálogos, el deferred siempre se resolverá
   // con los datos actualizados.
   return promise
-
 } // init() END
-
 
 module.exports = {
   get: _get,
@@ -314,5 +328,5 @@ module.exports = {
   elemFromId,
   userByUname,
   reqStatusEditable,
-  init
+  init,
 }

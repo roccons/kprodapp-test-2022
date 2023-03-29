@@ -30,22 +30,12 @@ const conf = _ev.setEnv({
       FILES_BASE: 'https://s3-us-west-2.amazonaws.com/dev-knotionworkflow-files',
       IMG_BASE: 'https://s3-us-west-2.amazonaws.com/dev-knotion-resources',
       KRB_API_BASE: 'https://dev-resourcebank-api.knotion.com/krb',
+      KRB_API_KEY: 'eb2e7eed-8921-11ec-b1d0-d43b04e619d6',
       KRB_URL_BASE: 'http://localhost:3333/#',
       AUTORIA_URL: 'https://stg-autoria.knotion.com/api-auth/resources/{id}',
       AUTORIA_KEY: '47cf15f4ac4d266d334e9cb30ace5e5f4e7ab09c',
       PUSHER_KEY: '406b01b7cc80376e979d'
     },
-    // Environment "staging" o preproducción
-    STG: {
-      API_BASE: 'https://stg-workflow-api.knotion.com/kprod',
-      FILES_BASE: 'https://s3-us-west-2.amazonaws.com/stg-knotionworkflow-files',
-      IMG_BASE: 'https://s3-us-west-2.amazonaws.com/stg-knotion-resources',
-      KRB_API_BASE: 'https://stg-resourcebank-api.knotion.com/krb',
-      KRB_URL_BASE: 'http://krb-app.s3-website-us-west-2.amazonaws.com/#',
-      AUTORIA_URL: 'https://stg-autoria.knotion.com/api-auth/resources/{id}',
-      AUTORIA_KEY: '47cf15f4ac4d266d334e9cb30ace5e5f4e7ab09c',
-      PUSHER_KEY: '88b22dddc730ed6d69c3'
-    }
   },
 
   CARDS_PER_PAGE: 100,            // Máximo número de OPs a cargar en Vista de tarjetas

@@ -47,7 +47,7 @@ const submitForm = evt => {
 
   user.login(getForm(), saveForm, err => {
     callError(err && err.status === 403
-      ? 'Nombre de usuario o contraseña incorrecta.' : App.server.errStr(err))
+      ? err.responseJSON.message : App.server.errStr(err))
   })
 }
 

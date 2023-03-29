@@ -45,6 +45,8 @@ const columns = [
     formatter: linkFmt
   }
 ]
+const session = require('store2').session
+const KRB_AUTH = `${session.get('user-info').idUser}:${App.config.KRB_API_KEY}`
 
 function linkFmt(id, row) {
   const module = row.resourceTypeCode === 'AST' ? 'asset' : 'recurso'

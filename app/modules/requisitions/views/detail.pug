@@ -76,7 +76,7 @@ mixin ageList(defAge)
                     if user_capabilities['processtype-edit'] || ~_partials.indexOf('p')
                         select.form-control.select-process-type(name="f_process_type" id="f_process_type" tabidx=tabidx++)
                           each ptype in process_types
-                            option(value=ptype.value selected=(ptype.value === process_type))= processTypesText[ptype.name]
+                            option(value=ptype.id selected=(ptype.id === process_type))= ptype.name_es
 
                     h4#process-type-text= processTypesText[process_type_value || 'none']
                       if is_translation
